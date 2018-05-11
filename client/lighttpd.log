@@ -1,0 +1,213 @@
+2018-05-09 20:10:08: (log.c.164) server started 
+2018-05-09 20:12:29: (server.c.1558) server stopped by UID = 1000 PID = 23144 
+2018-05-09 20:12:32: (log.c.164) server started 
+2018-05-09 20:12:51: (server.c.1558) server stopped by UID = 1000 PID = 23185 
+2018-05-09 20:13:14: (log.c.164) server started 
+2018-05-09 20:16:16: (mod_proxy.c.1021) establishing connection failed: Connection refused 
+2018-05-09 20:16:16: (mod_proxy.c.921) proxy-server disabled: 127.0.0.1 50007 8 
+2018-05-09 20:16:16: (mod_proxy.c.1329) no proxy-handler found for: /srvmyapp/ajax/current/get/ 
+2018-05-09 20:16:16: (server.c.1558) server stopped by UID = 1000 PID = 23321 
+2018-05-09 20:16:23: (log.c.164) server started 
+2018-05-09 20:16:53: (server.c.1558) server stopped by UID = 1000 PID = 23393 
+2018-05-09 20:35:44: (log.c.164) server started 
+2018-05-09 20:38:03: (server.c.1558) server stopped by UID = 1000 PID = 27405 
+2018-05-09 20:38:07: (log.c.164) server started 
+2018-05-09 20:41:12: (server.c.1558) server stopped by UID = 1000 PID = 27937 
+2018-05-09 20:41:20: (log.c.164) server started 
+2018-05-09 20:42:53: (server.c.1558) server stopped by UID = 1000 PID = 28232 
+2018-05-09 20:49:37: (log.c.164) server started 
+2018-05-09 20:54:30: (server.c.1558) server stopped by UID = 1000 PID = 28827 
+2018-05-10 11:10:58: (log.c.164) server started 
+2018-05-10 11:12:15: (server.c.1558) server stopped by UID = 1000 PID = 6360 
+2018-05-10 11:12:22: (log.c.164) server started 
+2018-05-10 11:18:30: (server.c.1558) server stopped by UID = 1000 PID = 6756 
+2018-05-10 11:18:37: (log.c.164) server started 
+2018-05-10 11:20:28: (server.c.1558) server stopped by UID = 1000 PID = 7151 
+2018-05-10 11:21:03: (log.c.164) server started 
+2018-05-10 11:22:02: (server.c.1558) server stopped by UID = 1000 PID = 7614 
+2018-05-10 11:22:08: (log.c.164) server started 
+2018-05-10 11:27:27: (server.c.1558) server stopped by UID = 1000 PID = 8111 
+2018-05-10 11:27:34: (log.c.164) server started 
+2018-05-10 11:29:06: (server.c.1558) server stopped by UID = 1000 PID = 8339 
+2018-05-10 11:29:13: (log.c.164) server started 
+2018-05-10 11:32:01: (server.c.1558) server stopped by UID = 1000 PID = 8615 
+2018-05-10 11:32:07: (log.c.164) server started 
+2018-05-10 11:32:30: (server.c.1558) server stopped by UID = 1000 PID = 8807 
+2018-05-10 11:32:38: (log.c.164) server started 
+2018-05-10 11:33:41: (server.c.1558) server stopped by UID = 1000 PID = 8999 
+2018-05-10 11:33:50: (log.c.164) server started 
+2018-05-10 11:36:22: (server.c.1558) server stopped by UID = 1000 PID = 9249 
+2018-05-10 11:36:26: (log.c.164) server started 
+2018-05-10 11:38:18: (server.c.1558) server stopped by UID = 1000 PID = 9556 
+2018-05-10 11:38:27: (log.c.164) server started 
+2018-05-10 11:39:31: (server.c.1558) server stopped by UID = 1000 PID = 9784 
+2018-05-10 11:39:35: (log.c.164) server started 
+2018-05-10 11:41:09: (server.c.1558) server stopped by UID = 1000 PID = 10038 
+2018-05-10 11:41:19: (log.c.164) server started 
+2018-05-10 11:45:08: (server.c.1558) server stopped by UID = 1000 PID = 10403 
+2018-05-10 11:45:14: (log.c.164) server started 
+2018-05-10 11:46:38: (server.c.1558) server stopped by UID = 1000 PID = 10609 
+2018-05-10 11:46:47: (log.c.164) server started 
+2018-05-10 11:47:08: (server.c.1558) server stopped by UID = 1000 PID = 10799 
+2018-05-10 11:47:33: (log.c.164) server started 
+2018-05-10 11:48:28: (server.c.1558) server stopped by UID = 1000 PID = 11127 
+2018-05-10 11:48:32: (log.c.164) server started 
+2018-05-10 11:50:03: (server.c.1558) server stopped by UID = 1000 PID = 11468 
+2018-05-10 11:50:07: (log.c.164) server started 
+2018-05-10 11:52:19: (server.c.1558) server stopped by UID = 1000 PID = 11708 
+2018-05-10 11:52:23: (log.c.164) server started 
+2018-05-10 11:52:51: (server.c.1558) server stopped by UID = 1000 PID = 11891 
+2018-05-10 11:52:55: (log.c.164) server started 
+2018-05-10 11:54:02: (server.c.1558) server stopped by UID = 1000 PID = 12075 
+2018-05-10 11:54:07: (log.c.164) server started 
+2018-05-10 11:54:44: (server.c.1558) server stopped by UID = 1000 PID = 12248 
+2018-05-10 11:54:48: (log.c.164) server started 
+2018-05-10 12:07:58: (server.c.1558) server stopped by UID = 1000 PID = 12994 
+2018-05-10 12:08:04: (log.c.164) server started 
+2018-05-10 12:15:38: (server.c.1558) server stopped by UID = 1000 PID = 13357 
+2018-05-10 12:15:50: (log.c.164) server started 
+2018-05-10 12:18:08: (server.c.1558) server stopped by UID = 1000 PID = 13604 
+2018-05-10 12:18:15: (log.c.164) server started 
+2018-05-10 13:17:31: (server.c.1558) server stopped by UID = 1000 PID = 16607 
+2018-05-10 20:13:48: (log.c.164) server started 
+2018-05-11 00:04:15: (server.c.1558) server stopped by UID = 0 PID = 1 
+2018-05-11 08:23:52: (log.c.164) server started 
+2018-05-11 08:32:46: (server.c.1558) server stopped by UID = 1000 PID = 4162 
+2018-05-11 08:35:54: (log.c.164) server started 
+2018-05-11 08:37:30: (server.c.1558) server stopped by UID = 1000 PID = 4450 
+2018-05-11 08:37:35: (log.c.164) server started 
+2018-05-11 08:39:19: (server.c.1558) server stopped by UID = 1000 PID = 4665 
+2018-05-11 08:39:21: (log.c.164) server started 
+2018-05-11 08:39:21: (server.c.1558) server stopped by UID = 1000 PID = 4781 
+2018-05-11 08:39:24: (log.c.164) server started 
+2018-05-11 08:48:46: (server.c.1558) server stopped by UID = 1000 PID = 5258 
+2018-05-11 08:48:54: (log.c.164) server started 
+2018-05-11 08:49:17: (server.c.1558) server stopped by UID = 1000 PID = 5405 
+2018-05-11 08:49:21: (log.c.164) server started 
+2018-05-11 08:53:28: (server.c.1558) server stopped by UID = 1000 PID = 5723 
+2018-05-11 08:53:32: (log.c.164) server started 
+2018-05-11 08:54:57: (server.c.1558) server stopped by UID = 1000 PID = 6006 
+2018-05-11 08:55:01: (log.c.164) server started 
+2018-05-11 08:56:17: (server.c.1558) server stopped by UID = 1000 PID = 6212 
+2018-05-11 08:56:20: (log.c.164) server started 
+2018-05-11 08:57:01: (server.c.1558) server stopped by UID = 1000 PID = 6390 
+2018-05-11 08:57:05: (log.c.164) server started 
+2018-05-11 08:58:23: (server.c.1558) server stopped by UID = 1000 PID = 6599 
+2018-05-11 08:58:27: (log.c.164) server started 
+2018-05-11 08:59:08: (server.c.1558) server stopped by UID = 1000 PID = 6773 
+2018-05-11 08:59:12: (log.c.164) server started 
+2018-05-11 09:00:01: (server.c.1558) server stopped by UID = 1000 PID = 6966 
+2018-05-11 09:00:06: (log.c.164) server started 
+2018-05-11 09:00:46: (server.c.1558) server stopped by UID = 1000 PID = 7155 
+2018-05-11 09:03:41: (log.c.164) server started 
+2018-05-11 09:04:27: (server.c.1558) server stopped by UID = 1000 PID = 7452 
+2018-05-11 09:04:32: (log.c.164) server started 
+2018-05-11 09:11:08: (server.c.1558) server stopped by UID = 1000 PID = 7837 
+2018-05-11 09:11:14: (log.c.164) server started 
+2018-05-11 09:11:47: (server.c.1558) server stopped by UID = 1000 PID = 7997 
+2018-05-11 09:11:52: (log.c.164) server started 
+2018-05-11 09:12:20: (server.c.1558) server stopped by UID = 1000 PID = 8173 
+2018-05-11 09:12:22: (log.c.164) server started 
+2018-05-11 09:13:42: (server.c.1558) server stopped by UID = 1000 PID = 8356 
+2018-05-11 09:13:46: (log.c.164) server started 
+2018-05-11 09:14:32: (server.c.1558) server stopped by UID = 1000 PID = 8526 
+2018-05-11 09:14:36: (log.c.164) server started 
+2018-05-11 09:14:52: (server.c.1558) server stopped by UID = 1000 PID = 8709 
+2018-05-11 09:14:57: (log.c.164) server started 
+2018-05-11 09:17:40: (server.c.1558) server stopped by UID = 1000 PID = 9071 
+2018-05-11 09:17:43: (log.c.164) server started 
+2018-05-11 09:23:00: (server.c.1558) server stopped by UID = 1000 PID = 9707 
+2018-05-11 10:58:30: (log.c.164) server started 
+2018-05-11 11:03:55: (server.c.1558) server stopped by UID = 1000 PID = 3701 
+2018-05-11 11:04:09: (log.c.164) server started 
+2018-05-11 11:05:19: (server.c.1558) server stopped by UID = 1000 PID = 3914 
+2018-05-11 11:05:20: (log.c.164) server started 
+2018-05-11 11:32:58: (server.c.1558) server stopped by UID = 1000 PID = 4941 
+2018-05-11 11:33:02: (log.c.164) server started 
+2018-05-11 13:02:13: (server.c.1558) server stopped by UID = 1000 PID = 7425 
+2018-05-11 13:58:07: (log.c.164) server started 
+2018-05-11 14:01:23: (server.c.1558) server stopped by UID = 1000 PID = 9405 
+2018-05-11 14:01:24: (log.c.164) server started 
+2018-05-11 14:01:27: (server.c.1558) server stopped by UID = 1000 PID = 9520 
+2018-05-11 14:01:32: (log.c.164) server started 
+2018-05-11 14:05:29: (server.c.1558) server stopped by UID = 1000 PID = 9732 
+2018-05-11 14:05:32: (log.c.164) server started 
+2018-05-11 14:07:51: (server.c.1558) server stopped by UID = 1000 PID = 9956 
+2018-05-11 14:07:52: (log.c.164) server started 
+2018-05-11 14:07:55: (server.c.1558) server stopped by UID = 1000 PID = 10070 
+2018-05-11 14:07:59: (log.c.164) server started 
+2018-05-11 14:08:30: (server.c.1558) server stopped by UID = 1000 PID = 10214 
+2018-05-11 14:08:33: (log.c.164) server started 
+2018-05-11 14:10:00: (server.c.1558) server stopped by UID = 1000 PID = 10399 
+2018-05-11 14:10:01: (log.c.164) server started 
+2018-05-11 14:10:03: (server.c.1558) server stopped by UID = 1000 PID = 10512 
+2018-05-11 15:55:39: (log.c.164) server started 
+2018-05-11 16:03:39: (server.c.1558) server stopped by UID = 1000 PID = 13677 
+2018-05-11 16:03:44: (log.c.164) server started 
+2018-05-11 16:05:55: (server.c.1558) server stopped by UID = 1000 PID = 13919 
+2018-05-11 16:05:57: (log.c.164) server started 
+2018-05-11 16:06:10: (server.c.1558) server stopped by UID = 1000 PID = 14064 
+2018-05-11 16:06:13: (log.c.164) server started 
+2018-05-11 16:09:38: (server.c.1558) server stopped by UID = 1000 PID = 14326 
+2018-05-11 16:09:39: (log.c.164) server started 
+2018-05-11 16:09:40: (server.c.1558) server stopped by UID = 1000 PID = 14438 
+2018-05-11 16:09:44: (log.c.164) server started 
+2018-05-11 16:09:57: (server.c.1558) server stopped by UID = 1000 PID = 14603 
+2018-05-11 16:11:36: (log.c.164) server started 
+2018-05-11 16:11:36: (server.c.1558) server stopped by UID = 1000 PID = 14683 
+2018-05-11 16:11:56: (log.c.164) server started 
+2018-05-11 16:12:43: (server.c.1558) server stopped by UID = 1000 PID = 14971 
+2018-05-11 16:15:12: (log.c.164) server started 
+2018-05-11 16:16:49: (server.c.1558) server stopped by UID = 1000 PID = 15304 
+2018-05-11 16:16:58: (log.c.164) server started 
+2018-05-11 16:30:28: (server.c.1558) server stopped by UID = 1000 PID = 15983 
+2018-05-11 16:34:16: (log.c.164) server started 
+2018-05-11 16:40:06: (server.c.1558) server stopped by UID = 1000 PID = 16651 
+2018-05-11 16:40:15: (log.c.164) server started 
+2018-05-11 16:43:02: (server.c.1558) server stopped by UID = 1000 PID = 16937 
+2018-05-11 16:43:05: (log.c.164) server started 
+2018-05-11 16:45:33: (server.c.1558) server stopped by UID = 1000 PID = 17142 
+2018-05-11 16:45:41: (log.c.164) server started 
+2018-05-11 16:47:31: (server.c.1558) server stopped by UID = 1000 PID = 17386 
+2018-05-11 16:48:01: (log.c.164) server started 
+2018-05-11 16:50:17: (server.c.1558) server stopped by UID = 1000 PID = 17665 
+2018-05-11 16:54:24: (log.c.164) server started 
+2018-05-11 16:56:06: (server.c.1558) server stopped by UID = 1000 PID = 18241 
+2018-05-11 16:56:36: (log.c.164) server started 
+2018-05-11 17:06:40: (server.c.1558) server stopped by UID = 1000 PID = 18900 
+2018-05-11 17:07:01: (log.c.164) server started 
+2018-05-11 17:10:47: (server.c.1558) server stopped by UID = 1000 PID = 19181 
+2018-05-11 17:11:18: (log.c.164) server started 
+2018-05-11 17:11:19: (server.c.1558) server stopped by UID = 1000 PID = 19332 
+2018-05-11 17:13:18: (log.c.164) server started 
+2018-05-11 17:15:20: (server.c.1558) server stopped by UID = 1000 PID = 19680 
+2018-05-11 17:16:01: (log.c.164) server started 
+2018-05-11 17:19:21: (server.c.1558) server stopped by UID = 1000 PID = 20129 
+2018-05-11 17:32:34: (log.c.164) server started 
+2018-05-11 17:32:48: (server.c.1558) server stopped by UID = 1000 PID = 21238 
+2018-05-11 17:36:17: (log.c.164) server started 
+2018-05-11 17:36:34: (server.c.1558) server stopped by UID = 1000 PID = 21715 
+2018-05-11 17:37:55: (log.c.164) server started 
+2018-05-11 17:38:22: (server.c.1558) server stopped by UID = 1000 PID = 21952 
+2018-05-11 17:39:28: (log.c.164) server started 
+2018-05-11 17:58:41: (mod_proxy.c.1021) establishing connection failed: Connection refused 
+2018-05-11 17:58:41: (mod_proxy.c.921) proxy-server disabled: 127.0.0.1 50007 13 
+2018-05-11 17:58:41: (mod_proxy.c.1329) no proxy-handler found for: /srvmyapp/ajax/game/getBoard 
+2018-05-11 17:58:46: (mod_proxy.c.1374) proxy - re-enabled: 127.0.0.1 50007 
+2018-05-11 17:59:03: (mod_proxy.c.1021) establishing connection failed: Connection refused 
+2018-05-11 17:59:03: (mod_proxy.c.921) proxy-server disabled: 127.0.0.1 50007 13 
+2018-05-11 17:59:03: (mod_proxy.c.1329) no proxy-handler found for: /srvmyapp/ajax/game/getBoard 
+2018-05-11 17:59:05: (mod_proxy.c.1329) no proxy-handler found for: /srvmyapp/ajax/game/getBoard 
+2018-05-11 17:59:08: (mod_proxy.c.1374) proxy - re-enabled: 127.0.0.1 50007 
+2018-05-11 18:01:27: (mod_proxy.c.1021) establishing connection failed: Connection refused 
+2018-05-11 18:01:27: (mod_proxy.c.921) proxy-server disabled: 127.0.0.1 50007 13 
+2018-05-11 18:01:27: (mod_proxy.c.1329) no proxy-handler found for: /srvmyapp/ajax/game/getBoard 
+2018-05-11 18:01:32: (mod_proxy.c.1374) proxy - re-enabled: 127.0.0.1 50007 
+2018-05-11 18:06:14: (server.c.1558) server stopped by UID = 0 PID = 1 
+2018-05-11 18:08:55: (log.c.164) server started 
+2018-05-11 18:18:48: (server.c.1558) server stopped by UID = 1000 PID = 2836 
+2018-05-11 18:18:52: (log.c.164) server started 
+2018-05-11 18:25:00: (server.c.1558) server stopped by UID = 1000 PID = 10941 
+2018-05-11 18:31:15: (log.c.164) server started 
+2018-05-11 18:31:24: (server.c.1558) server stopped by UID = 1000 PID = 12672 
+2018-05-13 20:38:56: (log.c.164) server started 

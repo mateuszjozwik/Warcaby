@@ -1,0 +1,68 @@
+/**
+ * \file styles.css
+ * \brief application styles
+ */
+
+.hidden {
+    display: none;
+}
+
+.error {
+    font-size: 2em;
+    color:red;
+}
+
+.info {
+    font-size: 2em;
+    color:green;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Noto Sans', sans-serif;
+	font-size: 100.01%;
+}
+
+#icons_ul {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+}
+
+#icons_ul > li {
+	float:left;
+    padding: 5px;
+}
+
+.board-element {
+    height: 30px;
+    width: 30px;
+    background-color: #cce5ffcc;
+    border: 1px solid #b8daff;;
+}
+
+.gameBoard {
+    height: 200px;
+    width: 200px;
+    border: 3px solid black;
+    background-color: #0b97c4;
+}
+.alert-floating {
+    position: fixed !important;
+    top: 200px;
+    left: 20%;
+    width: 60%;
+    text-align: center;
+    align-self: center;
+    font-size: 40px;
+}
+
+table {
+    width: auto !important;
+}
+
+.cell-image {
+    width: 60px;
+    height: 60px;
+}

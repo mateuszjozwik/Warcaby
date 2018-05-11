@@ -1,0 +1,151 @@
+<!--
+	@file about.html
+    @brief the AngularJS partial 'about'
+-->
+
+<!--<h1>My application - {{'MAIN' | translate}}</h1>-->
+
+<!--<ul ng-controller="versionController">-->
+  <!--<li id="server_time" ng-controller="currentController">{{'TIME' | translate}}: <em id="server_time_val">{{current.data.time}}</em></li>-->
+  <!--<li id="server_version">{{'SRV_VER' | translate}}: <em id="server_version_val">{{server_ver.data.server}}</em></li>-->
+  <!--<li id="db_version">{{'DB_VER' | translate}}: <em id="db_version_val">{{server_ver.data.database}}</em></li>-->
+  <!--<li id="client_version">{{'CLI_VER' | translate}}: <em id="client_version_val">{{client_ver}}</em></li>-->
+  <!--<li id="cpp_get_number">C++ getNumber() result: <em id="cpp_get_number_val">{{cpp_get.data.number}}</em></li>-->
+<!--</ul>-->
+
+<!--<p>{{ 'CPP_COMMANDS' | translate }}-->
+<!--<ul ng-controller="currentController" id="cpp_commands">-->
+  <!--<li ng-repeat="(command_id, command_desc) in cpp_commands">-->
+	<!--ID: <em id="cpp_command_id">{{command_id}}</em>,-->
+	<!--{{'STATE' | translate}}: {{command_desc.state}},-->
+	<!--<strong ng-if="command_desc.state == 'PENDING' ">-->
+	  <!--{{'PROGRESS' | translate}}: {{command_desc.progress}}-->
+	<!--</strong>-->
+  <!--</li>-->
+<!--</ul>-->
+<!--</p>-->
+
+
+<!--<ul ng-controller="commandController">-->
+  <!--<li id="cpp_commands_number">{{'COMMANDS_NUMBER' | translate}}: <em id="cpp_commands_number_val">{{cpp_commands_no}}</em>-->
+	<!--<button ng-click="clickNewCommand()" id="cpp_new_command_button" >-->
+	  <!--{{'START_NEW_COMMAND' | translate }}-->
+	<!--</button>-->
+
+
+  <!--</li>-->
+<!--</ul>-->
+<div ng-controller="gameController">
+    <div class="container my-5">
+        <!--<div class="card">-->
+            <!--<div class="card-body">-->
+                <!--<p>isGameStarted: <span ng-bind="data.isGameStarted"></span></p>-->
+                <!--<p>isGameFinished: <span ng-bind="data.isGameFinished"></span></p>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="alert alert-primary text-center" role="alert">
+            {{'welcome' | translate}}
+        </div>
+        <div class="d-flex justify-content-center my-4">
+            <button type="button" class="btn btn-primary mx-3" ng-disabled="gameState == 'STARTED'" ng-click="startGame()">{{'start_game' | translate}}</button>
+            <div class="dropdown mx-3">
+                <button class="btn btn-secondary dropdown-toggle"
+                        disabled="gameState.inProgress"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{'choose_difficulty' | translate}}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">{{'easy' | translate}}</a>
+                    <a class="dropdown-item" href="#">{{'normal' | translate}}</a>
+                    <a class="dropdown-item" href="#">{{'hard' | translate}}</a>
+                </div>
+            </div>
+                <button type="button" class="btn btn-danger mx-3" disabled="!gameState.inProgress">{{'give_up_game' | translate}}</button>
+                <button type="button" class="btn btn-primary mx-3" disabled="restartGame.inProgress">{{'restart_game' | translate}}</button>
+        </div>
+
+        <div class="row">
+            <div class="col-9">
+                <table class="table">
+                    <tbody>
+                        <tr ng-repeat="row in board">
+                            <td class="board-element p-3" ng-repeat="cell in row.cells">
+                                <img src="/images/pawnBlack.png" ng-click="on_cell_click(cell)" class="cell-image"></img>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-header">
+                        {{'game_stats' | translate}}
+                    </div>
+                    <div class="card-body">
+                        <p class="font-weight-bold">{{'computer' | translate}}</p>
+                        <p class="my-1 text-success">{{'wins' | translate}}: <span ng-bind="gameStats.computer.wins"></span></p>
+                        <p class="my-1 text-danger">{{'loses' | translate}}: <span ng-bind="gameStats.computer.loses"></span></p>
+                        <p class="my-1">{{'leftPounds' | translate}}: <span ng-bind="gameStats.computer.leftPounds"></span></p>
+                        <p class="my-1 border-bottom pb-3">{{'takenPounds' | translate}}: <span ng-bind="gameStats.computer.takenPounds"></span></p>
+                        <p class="font-weight-bold pt-3">{{'player' | translate}}</p>
+                        <p class="my-1 text-success">{{'wins' | translate}}: <span ng-bind="gameStats.player.wins"></span></p>
+                        <p class="my-1 text-danger">{{'loses' | translate}}: <span ng-bind="gameStats.player.loses"></span></p>
+                        <p class="my-1">{{'leftPounds' | translate}}: <span ng-bind="gameStats.player.leftPounds"></span></p>
+                        <p class="my-1">{{'takenPounds' | translate}}: <span ng-bind="gameStats.player.takenPounds"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="alert alert-success alert-floating" role="alert" ng-show="gameState.won">
+            {{'you_win' | translate}}
+        </div>
+        <div class="alert alert-danger alert-floating" role="alert" ng-show="gameState.lost">
+            {{'you_lose' | translate}}
+        </div>
+    </div>
+    <!--<button type="button" class="btn btn-primary m-3" ng-click="isGameStarted()">{{'isGameStarted' | translate}}</button>-->
+    <!--<button type="button" class="btn btn-primary m-3" ng-click="isGameFinished()">{{'isGameFinished' | translate}}</button>-->
+
+</div>
+
+<div ng-controller="historyController">
+    <div class="card mt-4">
+        <div class="card-header">
+            {{ 'gameHistory' | translate }}
+        </div>
+        <div class="card-body p-0 mb-0">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th class="py-1">{{ 'player_type' | translate}}</th>
+                    <th class="py-1">{{ 'moved_from' | translate}}</th>
+                    <th class="py-1">{{ 'moved_to' | translate}}</th>
+                    <th class="py-1">{{ 'kills' | translate}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="move in historyMoves">
+                    <td class="py-1" ng-bind="move.player_name"></td>
+                    <td class="py-1" ng-bind="move.from"></td>
+                    <td class="py-1" ng-bind="move.to"></td>
+                    <td class="py-1" ng-bind="move.kills"></td>
+                </tr>
+                <tr>
+                    <td class="py-1">Mateusz</td>
+                    <td class="py-1">A5</td>
+                    <td class="py-1">A3</td>
+                    <td class="py-1">1</td>
+                </tr>
+                <tr>
+                    <td class="py-1">Komputer</td>
+                    <td class="py-1">H5</td>
+                    <td class="py-1">H3</td>
+                    <td class="py-1">0</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
