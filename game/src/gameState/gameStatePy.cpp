@@ -16,51 +16,65 @@
 #include <boost/python.hpp>
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
 
-#include "gameState.hpp"
-#include "../position.hpp"
-#include "../gameElements/board/board.hpp"
-#include "../gameElements/board/field/field.hpp"
-#include "../gameElements/pawn/pawn.hpp"
+#include "../color.h"
+#include "../game.h"
+#include "../pawn.h"
+#include "../field.h"
+#include "../board.h"
+#include "../player.h"
 
 using namespace boost::python;
 
-namespace {
-    std::shared_ptr<Position> createPosition(unsigned x, unsigned y) {
-        return std::shared_ptr<Position>(new Position{x, y});
+/** Python interface for Game
+ */
+
+class GameManagerPy {
+public:
+    Board& getBoard() {
+        return Game::getInstance().getBoard();
     }
-}
+};
 
 /**
  * Python wrapper using Boost.Python
  */
 BOOST_PYTHON_MODULE( game )
-{
+        {
+         enum_<Color>("Color")
+                 .value("WHITE", Color::WHITE)
+                 .value("BLACK", Color::BLACK);
 
-        class_<GameState>("GameState")
-            .def("startGame", &GameState::startGame)
-            .def("getBoard", &GameState::getBoard, return_value_policy<reference_existing_object>())
-            .def("handleMove", &GameState::handleMove)
-            .def("isGameFinished", &GameState::isGameFinished)
-            .def("isGameStarted", &GameState::isGameStarted)
-            .def("validateMove", &GameState::validateMove);
+//        class_<Game>("Game")
+//            .def("getInstance", &Game::getInstance, return_value_policy<reference_existing_object>());
+//            .def("getBoard", &Game::getBoard, return_value_policy<reference_existing_object>());
 
         class_<Board>("Board")
-            .def("getField", &Board::getField, return_value_policy<reference_existing_object>());
-
-        class_<Position, std::shared_ptr<Position>>("Position")
-            .def("__init__", make_constructor(&createPosition))
-            .def("getX", &Position::getX)
-            .def("getY", &Position::getY)
-            ;
+            .def("setPawns", &Board::setPawns)
+            .def("getField", &Board::getField, return_value_policy<reference_existing_object>())
+        ;
 
         class_<Pawn>("Pawn")
-            .def("getColor", &Pawn::getColor)
+            .def("getX", &Pawn::getX)
+            .def("getY", &Pawn::getY)
             .def("isAlive", &Pawn::isAlive)
             .def("isQueen", &Pawn::isQueen)
-            .def("getPosition", &Pawn::getPosition, return_value_policy<copy_const_reference>())
-            ;
+            .def("getColor", &Pawn::getColor)
+            .def("kill", &Pawn::kill)
+        ;
 
         class_<Field>("Field")
+            .def("getX", &Field::getX)
+            .def("getY", &Field::getY)
+            .def("setY", &Field::setY)
+            .def("setX", &Field::setX)
             .def("hasPawn", &Field::hasPawn)
-            ;
-}
+            .def("getPawn", &Field::getPawn, return_value_policy<reference_existing_object>())
+            .def("removePawn", &Field::removePawn)
+            .def("isGameField", &Field::isGameField)
+        ;
+
+        class_<GameManagerPy>("Game")
+            .def( "getBoard", &GameManagerPy::getBoard, return_value_policy<reference_existing_object>())
+        ;
+
+        }

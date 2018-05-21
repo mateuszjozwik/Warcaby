@@ -62,7 +62,24 @@ table {
     width: auto !important;
 }
 
+.dark {
+    background-color: rgba(78, 140, 181, 0.8);
+    padding: inherit;
+    margin: -16px;
+}
+
+td:hover {
+    opacity: .4;
+    cursor: pointer;
+}
+
 .cell-image {
     width: 60px;
     height: 60px;
+}
+
+.chosen {
+    background-color: black;
+    border: 6px solid green;
+    border-radius: 50px;
 }

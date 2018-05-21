@@ -40,6 +40,7 @@
         <!--<div class="card">-->
             <!--<div class="card-body">-->
                 <!--<p>isGameStarted: <span ng-bind="data.isGameStarted"></span></p>-->
+                <!--<p>isGameStarted: <span ng-bind="data.isGameStarted"></span></p>->
                 <!--<p>isGameFinished: <span ng-bind="data.isGameFinished"></span></p>-->
             <!--</div>-->
         <!--</div>-->
@@ -71,8 +72,11 @@
                 <table class="table">
                     <tbody>
                         <tr ng-repeat="row in board">
-                            <td class="board-element p-3" ng-repeat="cell in row.cells">
-                                <img src="/images/pawnBlack.png" ng-click="on_cell_click(cell)" class="cell-image"></img>
+                            <td class="board-element p-3" ng-repeat="field in row" ng-click="choose(field)">
+                                <div ng-class="{'dark': field.isGameField}">
+                                    <div style="position: fixed; color: red; font-size: 10px; margin: -15px;">X: <span ng-bind="field.x"></span> Y: <span ng-bind="field.y"></span></div>
+                                    <img ng-src="{{getFieldImage(field)}}" class="cell-image" ng-class="{'chosen': isChosen(field)}"></img>
+                                </div>
                             </td>
                         </tr>
                     </tbody>

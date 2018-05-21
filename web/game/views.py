@@ -10,7 +10,7 @@ import logging
 # todo move state to state.py
 BOARD_WIDTH = 8
 BOARD_HEIGHT = 8
-
+import pdb;
 class State:
     """
     State of the game
@@ -19,16 +19,7 @@ class State:
         self.init_game()
 
     def init_game(self):
-        self._game = game.GameState()
-
-    def start_game(self):
-        return self._game.startGame()
-
-    def is_game_finished(self):
-        return self._game.isGameFinished()
-
-    def is_game_started(self):
-        return self._game.isGameStarted()
+        self._game = game.Game()
 
     def get_board(self):
         result = []
@@ -38,14 +29,30 @@ class State:
             for x in range(0, BOARD_WIDTH):
                 field = board.getField(x, y)
                 serialized = {
-                    'hasPawn': str(field.hasPawn()),
+                    'hasPawn': field.hasPawn(),
+                    'isGameField': field.isGameField(),
+                    'position': {
+                        'x': str(field.getX()),
+                        'y': str(field.getY())
+                    }
                 }
                 if field.hasPawn():
                     pawn = field.getPawn()
-                    serialized['isAlive'] = str(pawn.isAlive())
-                    serialized['color'] = str(pawn.getColor())
-                    serialized['isQueen'] = str(pawn.isQueen())
-            result[y].append(serialized)
+                    serialized['pawn'] = {}
+                    serialized['pawn']['isAlive'] = pawn.isAlive()
+                    serialized['pawn']['isQueen'] = pawn.isQueen()
+                    serialized['pawn']['color'] = pawn.getColor()
+                    serialized['pawn']['x'] = pawn.getX()
+                    serialized['pawn']['y'] = pawn.getY()
+                result[y].append(serialized)
+
+        # boardResult = []
+        # for row in result:
+        #     result_row = {"cells": []}
+        #     for cell in row:
+        #         result_row["cells"].append(cell)
+        #     boardResult.append(result_row)
+
         return result
 
 
@@ -55,46 +62,9 @@ _game_state_singleton = State()
 def get_game_state():
     return _game_state_singleton
 
-
-def startGame(params):
-    return {
-        "initGame": get_game_state().start_game()
-    }
-
-
-def handleMove(params):
-    return {
-        "handleMove ": True
-    }
-
-
-def isGameFinished(params):
-    return {
-        "isGameFinished": get_game_state().is_game_finished()
-    }
-
-
-def isGameStarted(params):
-    return {
-        "isGameStarted": get_game_state().is_game_started()
-    }
-
-
-def validateMove(params):
-    return {
-        "validateMove": True
-    }
-
-
 def getBoard(_):
 
     board = get_game_state().get_board()
-    result = []
-    for row in board:
-        result_row = {"cells": []}
-        for cell in row:
-            result_row["cells"].append(cell)
-        result.append(result_row)
     return {
-        "board": result,
+        "board": board,
     }

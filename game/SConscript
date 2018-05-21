@@ -1,4 +1,4 @@
-# -*- mode: Python; -*- 
+# -*- mode: Python; -*-
 
 ## @file calc/SConscript
 #  @brief scons build for calc C++ library
@@ -50,13 +50,12 @@ elif(platform.system() == "Windows"):
 
 #build C++ library
 cpplib = env_dll.SharedLibrary( target = 'game', source = [
-    '../game/src/gameState/gameState.cpp',
     '../game/src/gameState/gameStatePy.cpp',
-    '../game/src/gameElements/board/board.cpp',
-    '../game/src/gameElements/board/field/field.cpp',
-    '../game/src/gameElements/pawn/pawn.cpp',
-    '../game/src/position.cpp',
-
+    '../game/src/pawn.cpp',
+    '../game/src/board.cpp',
+    '../game/src/field.cpp',
+    '../game/src/game.cpp',
+    '../game/src/player.cpp',
 ])
 if(platform.system() == "Linux"):
    target = '../build_web/game/game.so'

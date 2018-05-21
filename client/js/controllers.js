@@ -4,23 +4,29 @@
 angular.module('myAppControllers', [])
 	.controller('gameController', function ($scope, gameCommands) {
 
+		$scope.colors = {
+			0: 'Black',
+			1: 'White'
+		};
+
+		$scope.boardData = null;
 		$scope.gameResult = 'pending';
 		$scope.data  = {
 			'isGameStarted': false,
             'isGameFinished': false
 		};
 		$scope.initView = function() {
-			$scope.initBoard();
 			$scope.gameState = 'WAITING_FOR_USER';
 
 			$scope.getBoard();
 		};
 
 		$scope.getBoard = function() {
-			console.log('getBoardData:');
 			gameCommands.getBoard(
 				function (data) {
-					console.log(data);
+                    $scope.boardData = data.data.board;
+                    console.log($scope.boardData);
+                    $scope.updateBoard();
                 }
 			)
 		};
@@ -44,7 +50,6 @@ angular.module('myAppControllers', [])
             gameCommands.startGame(
                 function (data) {
                     if (data.status === 200) {
-                    	console.log(data);
                         $scope.data.isGameStarted = data.data.isGameStarted;
                         $scope.gameState = 'STARTED';
 					}
@@ -54,7 +59,6 @@ angular.module('myAppControllers', [])
         $scope.isGameFinished = function () {
             gameCommands.isGameFinished(
                 function (data) {
-                    console.log(data);
                     $scope.data.isGameFinished = data.data.isGameFinished;
                 }
             );
@@ -63,40 +67,74 @@ angular.module('myAppControllers', [])
         $scope.isGameStarted = function () {
             gameCommands.isGameStarted(
                 function (data) {
-                    console.log(data);
                     $scope.data.isGameStarted = data.data.isGameStarted;
                 }
             );
         };
 
         //todo fetch width and height from backend
-        $scope.initBoard = function() {
+        $scope.updateBoard = function() {
             let width = 8;
             let height = 8;
             $scope.board = new Array(width);
-            for (let y = 0; y < width; ++y) {
-                $scope.board[y] = {};
-                $scope.board[y].cells = new Array(height);
-                for (let x = 0; x < height; ++x) {
+            for (let x = 0; x < width; ++x) {
+                $scope.board[x] = new Array(height);
+                for (let y= 0; y < height; ++y) {
+
                     let cell = {
-                    	x: x,
-						y: y,
-                        even: ((x + y) % 2) == 0
-					};
-                    $scope.board[y].cells[x] = cell;
+                        x: $scope.boardData[x][y].position.x,
+                        y: $scope.boardData[x][y].position.y,
+                        even: ((x + y) % 2) == 0,
+                        'hasPawn': $scope.boardData[x][y].hasPawn,
+                        'isGameField': $scope.boardData[x][y].isGameField,
+
+                    };
+
+					if ($scope.boardData[x][y].hasPawn) {
+						cell.pawn = {};
+                        cell.pawn.isAlive = $scope.boardData[x][y].pawn.isAlive;
+                        cell.pawn.isQueen = $scope.boardData[x][y].pawn.isQueen;
+                        cell.pawn.color = $scope.boardData[x][y].pawn.color;
+                        cell.pawn.chosen = false;
+                    }
+
+                    $scope.board[x][y] = cell;
                 }
             }
         };
 
-        $scope.getFieldImage = function(cell) {
+        $scope.isChosen = function(field) {
+            if (field.hasPawn) {
+                return field.pawn.chosen;
+            }
+		};
+
+        $scope.choose = function(field) {
+        	if (field.hasPawn) {
+        		$scope.unChooseFields();
+                field.pawn.chosen = true;
+            }
+		};
+
+        $scope.unChooseFields = function() {
+            for (let x = 0; x < 8; ++x) {
+                for (let y = 0; y < 8; ++y) {
+                	if (angular.isDefined($scope.board[x][y].pawn)) {
+                        $scope.board[x][y].pawn.chosen = false;
+                    }
+                }
+            }
+		}
+
+        $scope.getFieldImage = function(field) {
         	var prefix = '/images';
         	var sufix = '.png'
-        	if (!cell.hasPiece()) {
-        		return getUrl('/none') ;
-			} else {
-        		return getUrl('/pawnBlack');
+        	if (!field.hasPawn) {
+        		return $scope.getUrl('/field') ;
+			} else if (field.hasPawn) {
+        		return $scope.getUrl('/pawn' + $scope.colors[field.pawn.color]);
 			}
-		}
+		};
 
 		$scope.getUrl = function(type) {
         	return '/images' + type + '.png';
