@@ -3,6 +3,7 @@
 //
 
 #include "position.h"
+Position::Position() {}
 Position::Position(unsigned int x, unsigned int y) : x_(x), y_(y) {}
 
 unsigned Position::getX() const {
@@ -11,4 +12,17 @@ unsigned Position::getX() const {
 
 unsigned Position::getY() const {
     return y_;
+}
+
+void Position::setPosition(unsigned int x, unsigned int y) {
+    y_ = y;
+    x_ = x;
+}
+
+bool operator ==(const Position &a, const Position &b) {
+    return a.getX() == b.getX() && a.getY() == b.getY();
+}
+
+bool operator !=(const Position &a, const Position &b) {
+    return !(a == b);
 }

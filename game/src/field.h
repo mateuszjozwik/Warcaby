@@ -17,15 +17,16 @@
 
 
 class GAME_STATE_DLL( Field ) {
-    unsigned int xPos_;
-    unsigned int yPos_;
+    int xPos_;
+    int yPos_;
     bool hasPawn_;
     bool isGameField_;
-    const Pawn* pawn_ = nullptr;
+    Pawn* pawn_ = nullptr;
+//    Position position_;
 
 public:
     Field();
-    Field(unsigned int xPos, unsigned int yPos, bool isGameField, bool hasPawn_ = false);
+    Field(int xPos, int yPos, bool isGameField, bool hasPawn_ = false);
 
     int getX();
     int getY();
@@ -33,12 +34,17 @@ public:
     void setX(int x);
     void setY(int y);
 
-    const Pawn& getPawn() const;
-    bool hasPawn();
-    bool setPawn(const Pawn* pawn);
+
+//    const Position& getPosition() const;
+    Pawn& getPawn() const;
+    bool hasPawn() const ;
+    bool setPawn(Pawn* pawn);
     bool removePawn();
     bool isGameField() const;
     void setIsGameField(bool isGameField);
+    void setHasPawn(bool hasPawn);
+
+    void setPosition(int x, int y);
 };
 
 

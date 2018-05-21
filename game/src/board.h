@@ -33,6 +33,7 @@ public:
     static const unsigned HEIGHT = 8;
     const Field& getField(int x, int y) const;
     void setPawns(Player& player);
+    void movePawn(int newX, int newY, int oldX, int oldY);
 private:
     typedef Array2D<Field, WIDTH, HEIGHT> BoardMatrix;
     /// array of fields storing pieces

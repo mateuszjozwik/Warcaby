@@ -30,8 +30,16 @@ using namespace boost::python;
 
 class GameManagerPy {
 public:
-    Board& getBoard() {
+    const Board& getBoard() {
         return Game::getInstance().getBoard();
+    }
+
+    bool validateMove(int destX, int destY, int pawnX, int pawnY) {
+        return Game::getInstance().validateMove(destX, destY, pawnX, pawnY);
+    }
+
+    void movePawn(int destX, int destY, int pawnX, int pawnY) {
+        return Game::getInstance().movePawn(destX, destY, pawnX, pawnY);
     }
 };
 
@@ -65,16 +73,18 @@ BOOST_PYTHON_MODULE( game )
         class_<Field>("Field")
             .def("getX", &Field::getX)
             .def("getY", &Field::getY)
-            .def("setY", &Field::setY)
-            .def("setX", &Field::setX)
             .def("hasPawn", &Field::hasPawn)
             .def("getPawn", &Field::getPawn, return_value_policy<reference_existing_object>())
             .def("removePawn", &Field::removePawn)
             .def("isGameField", &Field::isGameField)
+            .def("setPawn", &Field::setPawn)
+
         ;
 
         class_<GameManagerPy>("Game")
-            .def( "getBoard", &GameManagerPy::getBoard, return_value_policy<reference_existing_object>())
+            .def("getBoard", &GameManagerPy::getBoard, return_value_policy<reference_existing_object>())
+            .def("validateMove", &GameManagerPy::validateMove)
+            .def("movePawn", &GameManagerPy::movePawn)
         ;
 
         }

@@ -5,12 +5,20 @@
 #include <iostream>
 #include "field.h"
 
-Field::Field() { }
-Field::Field(unsigned int xPos, unsigned int yPos, bool isGameField, bool hasPawn) :
+Field::Field() { std::cout << "F";}
+Field::Field(int xPos, int yPos, bool isGameField, bool hasPawn) :
         xPos_(xPos),
         yPos_(yPos),
         isGameField_(isGameField),
         hasPawn_(hasPawn) {}
+
+//void Field::setPosition(int x, int y) {
+//    position_.setPosition(x, y);
+//}
+//
+//const Position& Field::getPosition() const {
+//    return *position_;
+//}
 
 int Field::getX() {
     return xPos_;
@@ -20,21 +28,20 @@ int Field::getY() {
     return yPos_;
 }
 
-bool Field::hasPawn() {
+bool Field::hasPawn() const {
     return hasPawn_;
 }
 
-bool Field::setPawn(const Pawn* pawn) {
-    hasPawn_ = true;
+bool Field::setPawn(Pawn* pawn) {
     pawn_ = pawn;
 }
 
 bool Field::removePawn() {
 }
 
-const Pawn& Field::getPawn() const {
+Pawn& Field::getPawn() const {
     if (!pawn_) {
-        throw std::invalid_argument("Invalid pawn exception");
+        throw std::invalid_argument("invalid pawn");
     }
     return *pawn_;
 }
@@ -53,4 +60,8 @@ void Field::setY(int y) {
 
 void Field::setIsGameField(bool isGameField) {
     isGameField_ = isGameField;
+}
+
+void Field::setHasPawn(bool hasPawn) {
+    hasPawn_ = hasPawn;
 }

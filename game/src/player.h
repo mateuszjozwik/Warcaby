@@ -17,8 +17,8 @@ public:
     ~Player();
 
     std::array<Pawn, 12>* getPlayerPawns();
-    void setPawns();
-    Pawn* getPlayerPawn();
+    Pawn& getPlayerPawn(int x, int y);
+
     int num_;
 
 private:

@@ -4,6 +4,10 @@
 
 #include "./board.h"
 #include "player.h"
+#include <memory>
+
+using namespace std;
+
 #ifndef GAME_H
 #define GAME_H
 
@@ -15,16 +19,27 @@
 #define GAME_DLL(X) X
 #endif
 
+typedef shared_ptr<Field> PField;
+typedef shared_ptr<Pawn> PPawn;
+
 class GAME_DLL(Game) {
 public:
     static Game& getInstance();
     void const initGame();
-    Board& getBoard();
+    const Board& getBoard() const;
+    Board& getBoardMutable();
     Game();
 //    todo: this should not be commented
     Game(Game const &) = delete;
     void operator=(Game const &) = delete;
-    Player getPlayer();
+    Player getPlayer() const;
+    bool validateMove(int destX, int destY, int pawnX, int pawnY) const;
+    bool validDistance(PPawn pawn, PField destField) const;
+    bool validQueenDistance(PPawn pawn, PField destField) const;
+    void movePawn(int destX, int destY, int pawnX, int pawnY);
+
+
+
 private:
     Board board_;
     Player player_;

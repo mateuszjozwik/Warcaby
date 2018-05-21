@@ -34,8 +34,15 @@ angular.module('myAppServices', [])
             this.startGame = function(callback) {
                 return $http.get(this.baseURL + 'startGame').then(callback);
             };
-            this.handleMove = function(callback) {
-                return $http.get(this.baseURL + 'handleMove').then(callback);
+            this.handleMove = function(pawn, destinationField, callback) {
+                return $http.get(this.baseURL + 'handleMove', {
+                    params: {
+                        pawnX: pawn.x,
+                        pawnY: pawn.y,
+                        destinationX: destinationField.x,
+                        destinationY: destinationField.y
+                    }
+                }).then(callback);
             };
             this.validateMove = function(callback) {
                 return $http.get(this.baseURL + 'validateMove').then(callback);

@@ -13,6 +13,8 @@ public:
     unsigned  int getX() const;
     unsigned  int getY() const;
 
+    void setPosition(unsigned int x, unsigned int y);
+    void setY();
 private:
     unsigned int x_;
     unsigned int y_;

@@ -7,7 +7,7 @@
 
 #include "color.h"
 #include "position.h"
-
+#include <iostream>
 #ifdef GAME_STATE_EXPORTS
 /** Workaround for Windows DLL library exports */
 #define GAME_STATE_DLL(X) __declspec(dllexport)X
@@ -24,7 +24,7 @@ class GAME_STATE_DLL( Pawn ) {
     int posx_;
     int posy_;
 public:
-    Pawn(Color color_ = Color::WHITE, bool isAlive_ = true, bool isQueen_ = false, int posx_ = -1, int posy_ = -1);
+    Pawn(Color color_ = Color::WHITE, bool isAlive_ = true, bool isQueen_ = false, int posx = -1, int posy = -1);
     ~Pawn();
     Color getColor() const;
     void setColor(Color color);
@@ -32,10 +32,12 @@ public:
     bool isQueen() const;
     void promoteToQueen();
     void kill();
-    void setPosition(int x, int y);
+
     int getX();
     int getY();
 
+    void setX(int x);
+    void setY(int y);
 };
 
 

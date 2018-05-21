@@ -10,7 +10,7 @@ Pawn::Pawn(Color color, bool isAlive, bool isQueen, int x, int y)
           isAlive_(isAlive),
           isQueen_(isQueen),
           posx_(x),
-          posy_(y)  {
+          posy_(y){
     std::cout << "P ";
 }
 
@@ -42,15 +42,18 @@ void Pawn::kill() {
     isAlive_ = false;
 }
 
+void Pawn::setX(int x) {
+    posx_ = x;
+}
+
+void Pawn::setY(int y) {
+    posy_ = y;
+}
+
 int Pawn::getX() {
     return posx_;
 }
 
 int Pawn::getY() {
     return posy_;
-}
-
-void Pawn::setPosition(int x, int y) {
-    posx_ = x;
-    posy_ = y;
 }

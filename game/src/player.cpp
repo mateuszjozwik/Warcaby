@@ -18,6 +18,12 @@ std::array<Pawn, 12>* Player::getPlayerPawns() {
     return &playerPawns_;
 }
 
-Pawn* Player::getPlayerPawn() {
-    return &playerPawn_;
+Pawn& Player::getPlayerPawn(int x, int y) {
+
+    for (Pawn& pawn: playerPawns_) {
+        if (pawn.getY() == y && pawn.getX() == x) {
+            return pawn;
+        }
+    }
 }
+
