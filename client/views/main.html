@@ -64,7 +64,7 @@
                 </div>
             </div>
                 <button type="button" class="btn btn-danger mx-3" disabled="!gameState.inProgress">{{'give_up_game' | translate}}</button>
-                <button type="button" class="btn btn-primary mx-3" disabled="restartGame.inProgress">{{'restart_game' | translate}}</button>
+                <button type="button" class="btn btn-primary mx-3" ng-click="restartGame()">{{'restart_game' | translate}}</button>
         </div>
 
         <div class="row">
@@ -74,7 +74,7 @@
                         <tr ng-repeat="row in board">
                             <td class="board-element p-3" ng-repeat="field in row" ng-click="choose(field)">
                                 <div ng-class="{'dark': field.isGameField}">
-                                    <div style="position: fixed; color: red; font-size: 10px; margin: -15px;">X: <span ng-bind="field.x"></span> Y: <span ng-bind="field.y"></span></div>
+                                    <!--<div style="position: fixed; color: red; font-size: 10px; margin: -15px;">X: <span ng-bind="field.x"></span> Y: <span ng-bind="field.y"></span></div>-->
                                     <img ng-src="{{getFieldImage(field)}}" class="cell-image" ng-class="{'chosen': isChosen(field)}"></img>
                                 </div>
                             </td>
@@ -82,25 +82,25 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-3">
-                <div class="card">
-                    <div class="card-header">
-                        {{'game_stats' | translate}}
-                    </div>
-                    <div class="card-body">
-                        <p class="font-weight-bold">{{'computer' | translate}}</p>
-                        <p class="my-1 text-success">{{'wins' | translate}}: <span ng-bind="gameStats.computer.wins"></span></p>
-                        <p class="my-1 text-danger">{{'loses' | translate}}: <span ng-bind="gameStats.computer.loses"></span></p>
-                        <p class="my-1">{{'leftPounds' | translate}}: <span ng-bind="gameStats.computer.leftPounds"></span></p>
-                        <p class="my-1 border-bottom pb-3">{{'takenPounds' | translate}}: <span ng-bind="gameStats.computer.takenPounds"></span></p>
-                        <p class="font-weight-bold pt-3">{{'player' | translate}}</p>
-                        <p class="my-1 text-success">{{'wins' | translate}}: <span ng-bind="gameStats.player.wins"></span></p>
-                        <p class="my-1 text-danger">{{'loses' | translate}}: <span ng-bind="gameStats.player.loses"></span></p>
-                        <p class="my-1">{{'leftPounds' | translate}}: <span ng-bind="gameStats.player.leftPounds"></span></p>
-                        <p class="my-1">{{'takenPounds' | translate}}: <span ng-bind="gameStats.player.takenPounds"></span></p>
-                    </div>
-                </div>
-            </div>
+            <!--<div class="col-3">-->
+                <!--<div class="card">-->
+                    <!--<div class="card-header">-->
+                        <!--{{'game_stats' | translate}}-->
+                    <!--</div>-->
+                    <!--<div class="card-body">-->
+                        <!--<p class="font-weight-bold">{{'computer' | translate}}</p>-->
+                        <!--<p class="my-1 text-success">{{'wins' | translate}}: <span ng-bind="gameStats.computer.wins"></span></p>-->
+                        <!--<p class="my-1 text-danger">{{'loses' | translate}}: <span ng-bind="gameStats.computer.loses"></span></p>-->
+                        <!--<p class="my-1">{{'leftPounds' | translate}}: <span ng-bind="gameStats.computer.leftPounds"></span></p>-->
+                        <!--<p class="my-1 border-bottom pb-3">{{'takenPounds' | translate}}: <span ng-bind="gameStats.computer.takenPounds"></span></p>-->
+                        <!--<p class="font-weight-bold pt-3">{{'player' | translate}}</p>-->
+                        <!--<p class="my-1 text-success">{{'wins' | translate}}: <span ng-bind="gameStats.player.wins"></span></p>-->
+                        <!--<p class="my-1 text-danger">{{'loses' | translate}}: <span ng-bind="gameStats.player.loses"></span></p>-->
+                        <!--<p class="my-1">{{'leftPounds' | translate}}: <span ng-bind="gameStats.player.leftPounds"></span></p>-->
+                        <!--<p class="my-1">{{'takenPounds' | translate}}: <span ng-bind="gameStats.player.takenPounds"></span></p>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
         <div class="alert alert-success alert-floating" role="alert" ng-show="gameState.won">
             {{'you_win' | translate}}

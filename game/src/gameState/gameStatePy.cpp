@@ -38,8 +38,24 @@ public:
         return Game::getInstance().validateMove(destX, destY, pawnX, pawnY);
     }
 
+    bool canMove(int x, int y) {
+        return Game::getInstance().canMove(x, y);
+    }
+
     void movePawn(int destX, int destY, int pawnX, int pawnY) {
         return Game::getInstance().movePawn(destX, destY, pawnX, pawnY);
+    }
+
+    void removePawn(int destX, int destY, int pawnX, int pawnY) {
+        return Game::getInstance().removePawn(destX, destY, pawnX, pawnY);
+    }
+
+    bool canRemove(int destX, int destY, int pawnX, int pawnY) {
+        return Game::getInstance().canRemove(destX, destY, pawnX, pawnY);
+    }
+
+    void restartGame() {
+        return Game::getInstance().restartGame();
     }
 };
 
@@ -51,10 +67,6 @@ BOOST_PYTHON_MODULE( game )
          enum_<Color>("Color")
                  .value("WHITE", Color::WHITE)
                  .value("BLACK", Color::BLACK);
-
-//        class_<Game>("Game")
-//            .def("getInstance", &Game::getInstance, return_value_policy<reference_existing_object>());
-//            .def("getBoard", &Game::getBoard, return_value_policy<reference_existing_object>());
 
         class_<Board>("Board")
             .def("setPawns", &Board::setPawns)
@@ -84,7 +96,11 @@ BOOST_PYTHON_MODULE( game )
         class_<GameManagerPy>("Game")
             .def("getBoard", &GameManagerPy::getBoard, return_value_policy<reference_existing_object>())
             .def("validateMove", &GameManagerPy::validateMove)
+            .def("canRemove", &GameManagerPy::canRemove)
             .def("movePawn", &GameManagerPy::movePawn)
+            .def("removePawn", &GameManagerPy::removePawn)
+            .def("restartGame", &GameManagerPy::restartGame)
+            .def("canMove", &GameManagerPy::canMove)
         ;
 
         }

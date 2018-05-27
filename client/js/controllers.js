@@ -24,11 +24,18 @@ angular.module('myAppControllers', [])
 			$scope.getBoard();
 		};
 
+		$scope.restartGame = function() {
+            gameCommands.restartGame(
+                function (data) {
+                    $scope.getBoard();
+                }
+            )
+		}
+
 		$scope.getBoard = function() {
 			gameCommands.getBoard(
 				function (data) {
                     $scope.boardData = data.data.board;
-                    console.log($scope.boardData);
                     $scope.updateBoard();
                 }
 			)
@@ -98,8 +105,8 @@ angular.module('myAppControllers', [])
                         cell.pawn.isAlive = $scope.boardData[x][y].pawn.isAlive;
                         cell.pawn.isQueen = $scope.boardData[x][y].pawn.isQueen;
                         cell.pawn.color = $scope.boardData[x][y].pawn.color;
-                        cell.pawn.x = $scope.boardData[x][y].pawn.x;
-                        cell.pawn.y = $scope.boardData[x][y].pawn.y;
+                        cell.pawn.x = $scope.boardData[x][y].position.x;
+                        cell.pawn.y = $scope.boardData[x][y].position.y;
                         cell.pawn.chosen = false;
                     }
 
@@ -116,14 +123,34 @@ angular.module('myAppControllers', [])
 
         $scope.choose = function(field) {
         	if (field.hasPawn) {
-        		$scope.unChooseFields();
-        		$scope.isPawnChosen = true;
-        		$scope.chosenField = field;
-                field.pawn.chosen = true;
+
+                gameCommands.canMove(field,
+                    function (data) {
+                        if (data.status === 200) {
+                            if (data.data.canMove) {
+                                $scope.unChooseFields();
+                                $scope.isPawnChosen = true;
+                                $scope.chosenField = field;
+                                field.pawn.chosen = true;
+                            }
+                        }
+                    }
+                );
             } else if ($scope.isPawnChosen) {
                 $scope.move(field);
 			}
 		};
+
+        $scope.canMove = function(field) {
+            gameCommands.canMove(field,
+                function (data) {
+                    if (data.status === 200) {
+                    	console.log(data.data.canMove);
+                        return data.data.canMove;
+                    }
+                }
+            );
+        };
 
         $scope.unChooseFields = function() {
             for (let x = 0; x < 8; ++x) {
@@ -135,12 +162,11 @@ angular.module('myAppControllers', [])
             }
 		};
 
-        $scope.move = function(field) {
-            gameCommands.handleMove($scope.chosenField, field,
+        $scope.move = function(destination) {
+            gameCommands.handleMove($scope.chosenField, destination,
                 function (data) {
                     if (data.status === 200) {
-                        console.log(data);
-						 if (data.data.canMove) {
+						 if (data.data.isMoved) {
                              $scope.getBoard();
                              $scope.isPawnChosen = false;
                              $scope.chosenPawn = null;

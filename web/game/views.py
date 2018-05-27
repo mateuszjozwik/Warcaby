@@ -22,14 +22,23 @@ class State:
         self._game = game.Game()
 
     def validate_move(self, destination_x, destination_y, pawn_x, pawn_y):
-        logging.warning("validate_move")
-
         is_valid = self._game.validateMove(destination_x, destination_y, pawn_x, pawn_y)
 
         if is_valid:
             self._game.movePawn(destination_x, destination_y, pawn_x, pawn_y)
 
+        can_remove = self._game.canRemove(destination_x, destination_y, pawn_x, pawn_y)
+        if can_remove:
+            logging.warning("can_remove")
+            logging.warning(can_remove)
+            self._game.removePawn(destination_x, destination_y, pawn_x, pawn_y)
+
         return is_valid
+
+    def can_move(self, pawn_field_x, pawn_field_y):
+        can_move = self._game.canMove(pawn_field_x, pawn_field_y)
+
+        return can_move
 
     def get_board(self):
         result = []
@@ -55,16 +64,10 @@ class State:
                     serialized['pawn']['x'] = pawn.getX()
                     serialized['pawn']['y'] = pawn.getY()
                 result[y].append(serialized)
-
-        # boardResult = []
-        # for row in result:
-        #     result_row = {"cells": []}
-        #     for cell in row:
-        #         result_row["cells"].append(cell)
-        #     boardResult.append(result_row)
-
         return result
 
+    def restart_game(self):
+        self._game.restartGame()
 
 _game_state_singleton = State()
 
@@ -81,6 +84,18 @@ def getBoard(_):
     }
 
 
+def restartGame(_):
+    get_game_state().restart_game()
+
+def canMove(params):
+    pawn_field_x = int(params["pawnFieldX"])
+    pawn_field_y = int(params["pawnFieldY"])
+    can_move = get_game_state().can_move(pawn_field_x, pawn_field_y)
+
+    return {
+        'canMove': can_move
+    }
+
 def handleMove(params):
 
     destination_x = int(params["destinationX"])
@@ -88,10 +103,10 @@ def handleMove(params):
     pawn_x = int(params["pawnX"])
     pawn_y = int(params["pawnY"])
 
-    is_valid = get_game_state().validate_move(destination_x, destination_y, pawn_x, pawn_y)
+    is_moved = get_game_state().validate_move(destination_x, destination_y, pawn_x, pawn_y)
 
     return {
-        'canMove': is_valid
+        'isMoved': is_moved
     }
 
 

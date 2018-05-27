@@ -29,9 +29,7 @@ def ajax(request, module, function):
     """dispatch ajax requests"""
     try:
         logging.warning('------------__REQUEST_------------')
-        logging.warning(module)
         logging.warning(request)
-        logging.warning(function)
         fun = getattr(getattr(globals()[str(module)], 'views'), str(function))
         data = json.dumps( fun(request.GET) )
         return django.http.HttpResponse(data, content_type='application/json')

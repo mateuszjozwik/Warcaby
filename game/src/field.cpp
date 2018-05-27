@@ -5,20 +5,13 @@
 #include <iostream>
 #include "field.h"
 
-Field::Field() { std::cout << "F";}
+Field::Field() {};
+
 Field::Field(int xPos, int yPos, bool isGameField, bool hasPawn) :
         xPos_(xPos),
         yPos_(yPos),
         isGameField_(isGameField),
         hasPawn_(hasPawn) {}
-
-//void Field::setPosition(int x, int y) {
-//    position_.setPosition(x, y);
-//}
-//
-//const Position& Field::getPosition() const {
-//    return *position_;
-//}
 
 int Field::getX() {
     return xPos_;
@@ -41,7 +34,7 @@ bool Field::removePawn() {
 
 Pawn& Field::getPawn() const {
     if (!pawn_) {
-        throw std::invalid_argument("invalid pawn");
+        throw std::invalid_argument("Invalid pawn exception");
     }
     return *pawn_;
 }

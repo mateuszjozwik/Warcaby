@@ -21,6 +21,22 @@ Board::Board() {
     }
 }
 
+void Board::resetBoard(Player &player_) {
+    for (unsigned int x = 0; x < WIDTH; ++x) {
+        for (unsigned int y = 0; y < HEIGHT; ++y) {
+            boardMatrix_[x][y].setPawn(nullptr);
+            boardMatrix_[x][y].setHasPawn(false);
+        }
+    }
+
+    std::array<Pawn, 12>* pawns = player_.getPlayerPawns();
+
+    for (Pawn& pawn: pawns->_M_elems) {
+        pawn.setX(-1);
+        pawn.setY(-1);
+    }
+}
+
 const Field& Board::getField(int x, int y) const {
     if (x >= WIDTH || y >= HEIGHT) {
         throw std::invalid_argument("Invalid coordinates");
@@ -40,6 +56,15 @@ void Board::movePawn(int newX, int newY, int oldX, int oldY) {
     boardMatrix_[oldX][oldY].setPawn(nullptr);
 }
 
+void Board::removePawn(int x, int y) {
+    if (x >= WIDTH || y >= HEIGHT) {
+        throw std::invalid_argument("Invalid coordinates");
+    };
+
+    boardMatrix_[x][y].setHasPawn(false);
+    boardMatrix_[x][y].setPawn(nullptr);
+}
+
 void Board::setPawns(Player &player_) {
 
     for (unsigned int x = 0; x < WIDTH; ++x) {
@@ -49,7 +74,7 @@ void Board::setPawns(Player &player_) {
                 std::array<Pawn, 12>* pawns = player_.getPlayerPawns();
 
                 for (Pawn& pawn: pawns->_M_elems) {
-                    if (pawn.getY() < 0 && pawn.getX() < 8) {
+                    if (pawn.getY() < 0) {
                         pawn.setX(x);
                         pawn.setY(y);
                         boardMatrix_[x][y].setPawn(&pawn);

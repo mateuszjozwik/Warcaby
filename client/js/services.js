@@ -34,15 +34,28 @@ angular.module('myAppServices', [])
             this.startGame = function(callback) {
                 return $http.get(this.baseURL + 'startGame').then(callback);
             };
-            this.handleMove = function(pawn, destinationField, callback) {
+            this.handleMove = function(pawnField, destinationField, callback) {
                 return $http.get(this.baseURL + 'handleMove', {
                     params: {
-                        pawnX: pawn.x,
-                        pawnY: pawn.y,
+                        pawnX: pawnField.x,
+                        pawnY: pawnField.y,
                         destinationX: destinationField.x,
                         destinationY: destinationField.y
                     }
                 }).then(callback);
+            };
+
+            this.canMove = function(pawnField, callback) {
+                return $http.get(this.baseURL + 'canMove', {
+                    params: {
+                        pawnFieldX: pawnField.x,
+                        pawnFieldY: pawnField.y,
+                    }
+                }).then(callback);
+            };
+
+            this.restartGame = function(callback) {
+                return $http.get(this.baseURL + 'restartGame').then(callback);
             };
             this.validateMove = function(callback) {
                 return $http.get(this.baseURL + 'validateMove').then(callback);
@@ -52,7 +65,7 @@ angular.module('myAppServices', [])
             };
             this.isGameStarted = function(callback) {
                 return $http.get(this.baseURL + 'isGameStarted').then(callback);
-            }
+            };
             this.getBoard = function(callback) {
                 return $http.get(this.baseURL + 'getBoard').then(callback);
             }

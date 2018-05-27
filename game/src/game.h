@@ -26,6 +26,8 @@ class GAME_DLL(Game) {
 public:
     static Game& getInstance();
     void const initGame();
+    void restartGame();
+
     const Board& getBoard() const;
     Board& getBoardMutable();
     Game();
@@ -34,11 +36,15 @@ public:
     void operator=(Game const &) = delete;
     Player getPlayer() const;
     bool validateMove(int destX, int destY, int pawnX, int pawnY) const;
+    bool canRemove(int destX, int destY, int pawnX, int pawnY) const;
+
     bool validDistance(PField pawnField, PField destField) const;
     bool validQueenDistance(PField pawnField, PField destField) const;
     void movePawn(int destX, int destY, int pawnX, int pawnY);
-
-
+    bool checkDirection(int yDiff, Color color) const;
+    bool isKilling(const PField pawnField, const PField destField) const;
+    void removePawn(int destX, int destY, int pawnX, int pawnY);
+    bool canMove(int x, int y) const;
 
 private:
     Board board_;

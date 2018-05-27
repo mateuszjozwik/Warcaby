@@ -34,6 +34,9 @@ public:
     const Field& getField(int x, int y) const;
     void setPawns(Player& player);
     void movePawn(int newX, int newY, int oldX, int oldY);
+    void removePawn(int x, int y);
+    void resetBoard(Player &player_);
+
 private:
     typedef Array2D<Field, WIDTH, HEIGHT> BoardMatrix;
     /// array of fields storing pieces
