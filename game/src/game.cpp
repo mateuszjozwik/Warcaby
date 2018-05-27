@@ -32,34 +32,33 @@ Player Game::getPlayer() const {
 
 bool Game::validateMove(int destX, int destY, int pawnX, int pawnY) const {
 
-    auto field = make_shared<Field>(this->getBoard().getField(destX, destY));
-    auto pawn = make_shared<Pawn>(this->getPlayer().getPlayerPawn(pawnX, pawnY));
+    auto destinationField = make_shared<Field>(this->getBoard().getField(destX, destY));
+    auto pawnField = make_shared<Field>(this->getBoard().getField(pawnX, pawnY));
 
-
-    if (field->hasPawn()) {
+    if (destinationField->hasPawn()) {
         return false;
     } else {
-        bool isValid;
-        if (!pawn->isQueen()) {
-            return validDistance(pawn, field);
+        if (!pawnField->getPawn().isQueen()) {
+            return validDistance(pawnField, destinationField);
         } else {
-            return validQueenDistance(pawn, field);
+            return validQueenDistance(pawnField, destinationField);
         }
     }
 }
 
-bool Game::validQueenDistance(const PPawn pawn, const PField destField) const {
+bool Game::validQueenDistance(const PField pawnField, const PField destField) const {
 
 }
-bool Game::validDistance(const PPawn pawn, const PField destField) const {
+bool Game::validDistance(const PField pawnField, const PField destField) const {
 
-    int xDiff = pawn.get()->getX() - destField.get()->getX();
-    int yDiff = pawn.get()->getY() - destField.get()->getY();
+    int xDiff = pawnField.get()->getX() - destField.get()->getX();
+    int yDiff = pawnField.get()->getY() - destField.get()->getY();
 
-    if (xDiff == yDiff && abs(xDiff) == 1) {
+    if (abs(xDiff) == abs(yDiff) && abs(xDiff) == 1 && abs(yDiff) == 1) {
         return true;
     }
 
+    return false;
 }
 
 void Game::movePawn(int destX, int destY, int pawnX, int pawnY) {

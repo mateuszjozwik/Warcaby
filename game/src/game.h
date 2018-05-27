@@ -34,8 +34,8 @@ public:
     void operator=(Game const &) = delete;
     Player getPlayer() const;
     bool validateMove(int destX, int destY, int pawnX, int pawnY) const;
-    bool validDistance(PPawn pawn, PField destField) const;
-    bool validQueenDistance(PPawn pawn, PField destField) const;
+    bool validDistance(PField pawnField, PField destField) const;
+    bool validQueenDistance(PField pawnField, PField destField) const;
     void movePawn(int destX, int destY, int pawnX, int pawnY);
 
 
