@@ -37,6 +37,9 @@ public:
     Player getPlayer() const;
     bool validateMove(int destX, int destY, int pawnX, int pawnY) const;
     bool canRemove(int destX, int destY, int pawnX, int pawnY) const;
+    bool fieldOnBoard(int x, int y);
+    bool goingInValidDirection(PField pawnField, PField destinationField);
+    bool checkField(PField pawnField, int x, int y);
 
     bool validDistance(PField pawnField, PField destField) const;
     bool validQueenDistance(PField pawnField, PField destField) const;
@@ -44,7 +47,7 @@ public:
     bool checkDirection(int yDiff, Color color) const;
     bool isKilling(const PField pawnField, const PField destField) const;
     void removePawn(int destX, int destY, int pawnX, int pawnY);
-    bool canMove(int x, int y) const;
+    bool canMove(int x, int y);
 
 private:
     Board board_;

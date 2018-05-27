@@ -38,14 +38,14 @@ void Board::resetBoard(Player &player_) {
 }
 
 const Field& Board::getField(int x, int y) const {
-    if (x >= WIDTH || y >= HEIGHT) {
+    if (x >= 8 || y >= 8) {
         throw std::invalid_argument("Invalid coordinates");
     }
     return boardMatrix_[x][y];
 }
 
 void Board::movePawn(int newX, int newY, int oldX, int oldY) {
-    if (oldX >= WIDTH || oldY >= HEIGHT || newX >= WIDTH || newY >= HEIGHT) {
+    if (oldX >= 8 || oldY >= 8 || newX >= 8 || newY >= 8) {
         throw std::invalid_argument("Invalid coordinates");
     };
 
@@ -57,7 +57,7 @@ void Board::movePawn(int newX, int newY, int oldX, int oldY) {
 }
 
 void Board::removePawn(int x, int y) {
-    if (x >= WIDTH || y >= HEIGHT) {
+    if (x >= 8 || y >= 8) {
         throw std::invalid_argument("Invalid coordinates");
     };
 
