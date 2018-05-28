@@ -73,9 +73,9 @@
                     <tbody>
                         <tr ng-repeat="row in board">
                             <td class="board-element p-3" ng-repeat="field in row" ng-click="choose(field)">
-                                <div ng-class="{'dark': field.isGameField}">
+                                <div ng-class="{'dark': field.isGameField}" >
                                     <!--<div style="position: fixed; color: red; font-size: 10px; margin: -15px;">X: <span ng-bind="field.x"></span> Y: <span ng-bind="field.y"></span></div>-->
-                                    <img ng-src="{{getFieldImage(field)}}" class="cell-image" ng-class="{'chosen': isChosen(field)}"></img>
+                                    <img ng-src="{{getFieldImage(field)}}" ng-mouseover="canChoose(field)" ng-mouseleave="removeCanBeMovedClass()" class="cell-image" ng-class="{'chosen': isChosen(field), 'canBeMoved': canBeMoved(field)}"></img>
                                 </div>
                             </td>
                         </tr>

@@ -121,9 +121,29 @@ angular.module('myAppControllers', [])
             }
 		};
 
+        $scope.canBeMoved = function(field) {
+            if (field.hasPawn) {
+                return field.pawn.canBeMoved;
+            }
+        };
+
+        $scope.canChoose = function(field) {
+            $scope.removeCanBeMovedClass();
+            if (field.hasPawn) {
+                gameCommands.canMove(field,
+                    function (data) {
+                        if (data.status === 200) {
+                            if (data.data.canMove) {
+                                field.pawn.canBeMoved = true;
+                            }
+                        }
+                    }
+                );
+            }
+        };
+
         $scope.choose = function(field) {
         	if (field.hasPawn) {
-
                 gameCommands.canMove(field,
                     function (data) {
                         if (data.status === 200) {
@@ -145,7 +165,6 @@ angular.module('myAppControllers', [])
             gameCommands.canMove(field,
                 function (data) {
                     if (data.status === 200) {
-                    	console.log(data.data.canMove);
                         return data.data.canMove;
                     }
                 }
@@ -161,6 +180,16 @@ angular.module('myAppControllers', [])
                 }
             }
 		};
+
+        $scope.removeCanBeMovedClass = function() {
+            for (let x = 0; x < 8; ++x) {
+                for (let y = 0; y < 8; ++y) {
+                    if (angular.isDefined($scope.board[x][y].pawn)) {
+                        $scope.board[x][y].pawn.canBeMoved = false;
+                    }
+                }
+            }
+        };
 
         $scope.move = function(destination) {
             gameCommands.handleMove($scope.chosenField, destination,
