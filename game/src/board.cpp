@@ -52,6 +52,9 @@ void Board::movePawn(int newX, int newY, int oldX, int oldY) {
     boardMatrix_[newX][newY].setPawn(&boardMatrix_[oldX][oldY].getPawn());
     boardMatrix_[newX][newY].setHasPawn(true);
 
+//    todo: check if pawn got to field in which converts to queen
+//    boardMatrix_[newX][newY].getPawn().setQueen();
+
     boardMatrix_[oldX][oldY].setHasPawn(false);
     boardMatrix_[oldX][oldY].setPawn(nullptr);
 }

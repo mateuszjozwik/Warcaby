@@ -23,12 +23,77 @@ void Game::restartGame() {
 bool Game::canMove(int x, int y) {
     auto pawnField = make_shared<Field>(this->getBoard().getField(x, y));
 
-    bool checkNE = checkField(pawnField, 1, -1);
+    bool checkNE = checkField(pawnField,  1, -1);
     bool checkNW = checkField(pawnField, -1, -1);
-    bool checkSE = checkField(pawnField, 1, +1);
+    bool checkSE = checkField(pawnField,  1, +1);
     bool checkSW = checkField(pawnField, -1, +1);
 
     return (checkNE || checkNW || checkSE || checkSW);
+}
+
+bool Game::canQueenMove(int x, int y) {
+    auto pawnField = make_shared<Field>(this->getBoard().getField(x, y));
+
+    bool checkNE = checkQueenDirection(pawnField, 1, -1);
+    bool checkNW = checkQueenDirection(pawnField,-1, -1);
+    bool checkSE = checkQueenDirection(pawnField, 1, +1);
+    bool checkSW = checkQueenDirection(pawnField,-1, +1);
+
+    return (checkNE || checkNW || checkSE || checkSW);
+}
+
+bool Game::checkQueenDirection(PField pawnField, int x, int y) {
+    int pawnX = pawnField->getX();
+    int pawnY = pawnField->getY();
+
+    int fieldX = pawnX + x;
+    int fieldY = pawnY + y;
+
+    bool canMove = false;
+
+    //Check if can move without killing
+    while(fieldOnBoard(fieldX, fieldY)) {
+        auto destinationField = make_shared<Field>(this->getBoard().getField(fieldX, fieldY));
+        if (!destinationField.get()->hasPawn()) {
+            canMove = true;
+            break;
+        }
+
+        fieldX = pawnX + x;
+        fieldY = pawnY + y;
+    }
+
+    //Check if queen can move with kill
+    int fieldToGoX = pawnX + 2*x;
+    int fieldToGoY = pawnY + 2*y;
+    while(fieldOnBoard(fieldToGoX, fieldToGoY)) {
+        if(hasOneEnemyOnPath(pawnX, pawnY, fieldToGoX, fieldToGoY, x, y)) {
+            canMove = true;
+        }
+        fieldToGoX = fieldToGoX + x;
+        fieldToGoY = fieldToGoY + y;
+    };
+
+    return canMove;
+}
+
+bool Game::hasOneEnemyOnPath(int pawnX, int pawnY, int fieldToGoX, int fieldToGoY, int directionX, int directionY) {
+    int currentFieldX = pawnX+directionX;
+    int currentFieldY = pawnY+directionY;
+
+    int enemiesCount = 0;
+
+    while (currentFieldX != fieldToGoX && currentFieldY != fieldToGoY) {
+        auto pawnField = make_shared<Field>(this->getBoard().getField(currentFieldX, currentFieldY));
+        //todo: checkColor!!!!!!!!!!!!
+        if (pawnField->hasPawn()) {
+            enemiesCount++;
+        }
+        currentFieldX += directionX;
+        currentFieldY += directionY;
+    }
+
+    return (enemiesCount==1);
 }
 
 bool Game::checkField(PField pawnField, int x, int y) {
@@ -67,6 +132,11 @@ bool Game::checkField(PField pawnField, int x, int y) {
 bool Game::fieldOnBoard(int x, int y) {
     return (x>-1 && x<8)
            && (y>-1 && y<8);
+}
+
+bool Game::fieldToKillOnBoard(int x, int y) {
+    return (x>0 && x<7)
+           && (y>0 && y<7);
 }
 
 bool Game::goingInValidDirection(PField pawnField, PField destinationField) {
@@ -129,9 +199,48 @@ bool Game::isKilling(const PField pawnField, const PField destField) const {
     return this->getBoard().getField(victimX, victimY).hasPawn();
 }
 
-bool Game::validQueenDistance(const PField pawnField, const PField destField) const {
-    return false;
+bool Game::isQueenKilling(const PField pawnField, const PField destField) const {
+
+    //coordinates of pawn which will be removed
+    int from = pawnField->getX();
+    int to = destField->getX();
+
+    if (from > to) {
+        for (int i=from+1 ; i<to ; i++) {
+            if (this->getBoard().getField(i, i).hasPawn()) {
+                return true;
+            }
+        }
+        return false;
+    } else {
+        for (int i=to+1 ; i<from ; i++) {
+            if (this->getBoard().getField(i, i).hasPawn()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
+
+bool Game::validQueenDistance(const PField pawnField, const PField destField) const {
+    int xDiff = destField.get()->getX() - pawnField.get()->getX();
+    int yDiff = destField.get()->getY() - pawnField.get()->getY();
+
+    bool isValidDirection = checkDirection(yDiff, pawnField.get()->getPawn().getColor());
+
+    if (abs(xDiff) == abs(yDiff)) {
+        if (abs(xDiff) == 1) {
+            return isValidDirection;
+        } else if (abs(xDiff) > 1 && abs(xDiff) < 8) {
+            isQueenKilling(pawnField, destField);
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
+
 bool Game::validDistance(const PField pawnField, const PField destField) const {
 
     int xDiff = destField.get()->getX() - pawnField.get()->getX();

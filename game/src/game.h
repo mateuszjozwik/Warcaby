@@ -38,16 +38,21 @@ public:
     bool validateMove(int destX, int destY, int pawnX, int pawnY) const;
     bool canRemove(int destX, int destY, int pawnX, int pawnY) const;
     bool fieldOnBoard(int x, int y);
+    bool fieldToKillOnBoard(int x, int y);
     bool goingInValidDirection(PField pawnField, PField destinationField);
     bool checkField(PField pawnField, int x, int y);
+    bool checkQueenDirection(PField pawnField, int x, int y);
 
     bool validDistance(PField pawnField, PField destField) const;
     bool validQueenDistance(PField pawnField, PField destField) const;
     void movePawn(int destX, int destY, int pawnX, int pawnY);
     bool checkDirection(int yDiff, Color color) const;
     bool isKilling(const PField pawnField, const PField destField) const;
+    bool isQueenKilling(const PField pawnField, const PField destField) const;
     void removePawn(int destX, int destY, int pawnX, int pawnY);
     bool canMove(int x, int y);
+    bool canQueenMove(int x, int y);
+    bool hasOneEnemyOnPath(int pawnX, int pawnY, int fieldToGoX, int fieldToGoY, int directionX, int directionY);
 
 private:
     Board board_;

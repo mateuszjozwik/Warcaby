@@ -113,6 +113,7 @@ angular.module('myAppControllers', [])
                     $scope.board[x][y] = cell;
                 }
             }
+            console.log($scope.board);
         };
 
         $scope.isChosen = function(field) {
@@ -212,7 +213,11 @@ angular.module('myAppControllers', [])
         	if (!field.hasPawn) {
         		return $scope.getUrl('/field') ;
 			} else if (field.hasPawn) {
-        		return $scope.getUrl('/pawn' + $scope.colors[field.pawn.color]);
+        	    if (field.pawn.isQueen) {
+                    return $scope.getUrl('/pawn' + $scope.colors[field.pawn.color] + 'Queen');
+                } else {
+                    return $scope.getUrl('/pawn' + $scope.colors[field.pawn.color]);
+                }
 			}
 		};
 
