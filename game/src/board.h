@@ -32,7 +32,7 @@ public:
     static const unsigned WIDTH = 8;
     static const unsigned HEIGHT = 8;
     const Field& getField(int x, int y) const;
-    void setPawns(Player& player);
+    void setPawns(Player& player, Player& enemy);
     void movePawn(int newX, int newY, int oldX, int oldY);
     void removePawn(int x, int y);
     void resetBoard(Player &player_);

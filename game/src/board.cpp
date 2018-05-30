@@ -34,6 +34,7 @@ void Board::resetBoard(Player &player_) {
     for (Pawn& pawn: pawns->_M_elems) {
         pawn.setX(-1);
         pawn.setY(-1);
+        pawn.setQueen(false);
     }
 }
 
@@ -68,14 +69,12 @@ void Board::removePawn(int x, int y) {
     boardMatrix_[x][y].setPawn(nullptr);
 }
 
-void Board::setPawns(Player &player_) {
+void Board::setPawns(Player &player_, Player &enemy_) {
 
     for (unsigned int x = 0; x < WIDTH; ++x) {
         for (unsigned int y = 0; y < HEIGHT; ++y) {
             if (y<3 && ((x%2 != 0 && y%2==0) || (x%2 == 0 && y%2!=0))) {
-
                 std::array<Pawn, 12>* pawns = player_.getPlayerPawns();
-
                 for (Pawn& pawn: pawns->_M_elems) {
                     if (pawn.getY() < 0) {
                         pawn.setX(x);
@@ -86,11 +85,21 @@ void Board::setPawns(Player &player_) {
                         break;
                     }
                 }
-
             }
 
             if ((y>4) && ((x%2==0 && y%2!=0) || (x%2!=0 && y%2==0))) {
-//                boardMatrix_[x][y].setPawn(new Pawn(Color::WHITE));
+                std::array<Pawn, 12>* pawns = enemy_.getPlayerPawns();
+                for (Pawn& pawn: pawns->_M_elems) {
+                    if (pawn.getY() < 0) {
+                        pawn.setX(x);
+                        pawn.setY(y);
+                        pawn.setColor(Color::BLACK);
+                        boardMatrix_[x][y].setPawn(&pawn);
+                        boardMatrix_[x][y].setHasPawn(true);
+
+                        break;
+                    }
+                }
             }
         }
     }

@@ -31,7 +31,6 @@ public:
     const Board& getBoard() const;
     Board& getBoardMutable();
     Game();
-//    todo: this should not be commented
     Game(Game const &) = delete;
     void operator=(Game const &) = delete;
     Player getPlayer() const;
@@ -53,10 +52,12 @@ public:
     bool canMove(int x, int y);
     bool canQueenMove(int x, int y);
     bool hasOneEnemyOnPath(int pawnX, int pawnY, int fieldToGoX, int fieldToGoY, int directionX, int directionY);
+    bool canGoToField(PField pawnField, PField destinationField);
 
 private:
     Board board_;
     Player player_;
+    Player enemy_;
 };
 
 

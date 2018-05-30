@@ -58,6 +58,6 @@ int Pawn::getY() {
     return posy_;
 }
 
-void Pawn::setQueen() {
-    isQueen_ = true;
+void Pawn::setQueen(bool isQueen) {
+    isQueen_ = isQueen;
 }

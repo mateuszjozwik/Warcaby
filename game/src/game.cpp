@@ -12,12 +12,12 @@ Game& Game::getInstance() {
 }
 
 void const Game::initGame() {
-    board_.setPawns(player_);
+    board_.setPawns(player_, enemy_);
 }
 
 void Game::restartGame() {
     board_.resetBoard(player_);
-    board_.setPawns(player_);
+    board_.setPawns(player_, enemy_);
 }
 
 bool Game::canMove(int x, int y) {
@@ -112,7 +112,7 @@ bool Game::checkField(PField pawnField, int x, int y) {
             }
         } else {
             //Check if field next to current has pawn in different color
-            if (destinationField->getPawn().getColor() != destinationField->getPawn().getColor()) {
+            if (pawnField->getPawn().getColor() != destinationField->getPawn().getColor()) {
                 //check if next is on Board
                 fieldX = fieldX+x;
                 fieldY = fieldY+y;
@@ -125,6 +125,13 @@ bool Game::checkField(PField pawnField, int x, int y) {
             }
         }
     }
+
+    return false;
+}
+
+
+bool Game::canGoToField(PField pawnField, PField destinationField) {
+//    todo: implement
 
     return false;
 }
@@ -184,7 +191,18 @@ bool Game::canRemove(int destX, int destY, int pawnX, int pawnY) const {
     int victimX = (pawnX + destX)/2;
     int victimY = (pawnY + destY)/2;
     if (abs(xDiff) == abs(yDiff) && abs(yDiff) == 2) {
-        return this->getBoard().getField(victimX, victimY).hasPawn();
+
+        cout << "PawnX: " << pawnX << "pawnY: " << pawnY << endl;
+        cout << "VictimX: " << victimX << "VictimY: " << victimY << endl;
+
+        cout << "VictimField: " << this->getBoard().getField(victimX, victimY).hasPawn() << endl;
+        cout << "PawnField: " << this->getBoard().getField(pawnX, pawnY).hasPawn() << endl;
+
+        if (this->getBoard().getField(victimX, victimY).hasPawn()
+                && this->getBoard().getField(pawnX, pawnY).hasPawn()) {
+            return (this->getBoard().getField(victimX, victimY).getPawn().getColor()
+                    != this->getBoard().getField(pawnX, pawnY).getPawn().getColor());
+        }
     }
 
     return false;
@@ -196,7 +214,11 @@ bool Game::isKilling(const PField pawnField, const PField destField) const {
     int victimX = (pawnField->getX() + destField->getX())/2;
     int victimY = (pawnField->getY() + destField->getY())/2;
 
-    return this->getBoard().getField(victimX, victimY).hasPawn();
+    if (this->getBoard().getField(victimX, victimY).hasPawn()) {
+        return (this->getBoard().getField(victimX, victimY).getPawn().getColor() != pawnField.get()->getPawn().getColor());
+    } else {
+        return false;
+    }
 }
 
 bool Game::isQueenKilling(const PField pawnField, const PField destField) const {

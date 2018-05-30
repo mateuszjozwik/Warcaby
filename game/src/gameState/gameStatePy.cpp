@@ -69,7 +69,6 @@ BOOST_PYTHON_MODULE( game )
                  .value("BLACK", Color::BLACK);
 
         class_<Board>("Board")
-            .def("setPawns", &Board::setPawns)
             .def("getField", &Board::getField, return_value_policy<reference_existing_object>())
         ;
 

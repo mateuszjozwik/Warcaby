@@ -32,7 +32,7 @@ public:
     bool isQueen() const;
     void promoteToQueen();
     void kill();
-    void setQueen();
+    void setQueen(bool isQueen);
 
     int getX();
     int getY();
