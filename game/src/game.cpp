@@ -192,17 +192,8 @@ bool Game::canRemove(int destX, int destY, int pawnX, int pawnY) const {
     int victimY = (pawnY + destY)/2;
     if (abs(xDiff) == abs(yDiff) && abs(yDiff) == 2) {
 
-        cout << "PawnX: " << pawnX << "pawnY: " << pawnY << endl;
-        cout << "VictimX: " << victimX << "VictimY: " << victimY << endl;
-
-        cout << "VictimField: " << this->getBoard().getField(victimX, victimY).hasPawn() << endl;
-        cout << "PawnField: " << this->getBoard().getField(pawnX, pawnY).hasPawn() << endl;
-
-        if (this->getBoard().getField(victimX, victimY).hasPawn()
-                && this->getBoard().getField(pawnX, pawnY).hasPawn()) {
-            return (this->getBoard().getField(victimX, victimY).getPawn().getColor()
-                    != this->getBoard().getField(pawnX, pawnY).getPawn().getColor());
-        }
+        return (this->getBoard().getField(victimX, victimY).getPawn().getColor()
+                != this->getBoard().getField(pawnX, pawnY).getPawn().getColor());
     }
 
     return false;
