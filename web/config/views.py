@@ -28,7 +28,6 @@ def index(request):
 def ajax(request, module, function):
     """dispatch ajax requests"""
     try:
-        logging.warning('------------__REQUEST_------------')
         logging.warning(request)
         fun = getattr(getattr(globals()[str(module)], 'views'), str(function))
         data = json.dumps( fun(request.GET) )

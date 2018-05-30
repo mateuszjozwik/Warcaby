@@ -23,14 +23,11 @@ class State:
 
     def validate_move(self, destination_x, destination_y, pawn_x, pawn_y):
         is_valid = self._game.validateMove(destination_x, destination_y, pawn_x, pawn_y)
+        can_remove = self._game.canRemove(destination_x, destination_y, pawn_x, pawn_y)
 
         if is_valid:
             self._game.movePawn(destination_x, destination_y, pawn_x, pawn_y)
-
-        can_remove = self._game.canRemove(destination_x, destination_y, pawn_x, pawn_y)
         if can_remove:
-            logging.warning("can_remove")
-            logging.warning(can_remove)
             self._game.removePawn(destination_x, destination_y, pawn_x, pawn_y)
 
         return is_valid
