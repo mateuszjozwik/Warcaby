@@ -21,21 +21,36 @@ class State:
     def init_game(self):
         self._game = game.Game()
 
-    def validate_move(self, destination_x, destination_y, pawn_x, pawn_y):
+    def validate_move(self, destination_x, destination_y, pawn_x, pawn_y, must_kill):
         is_valid = self._game.validateMove(destination_x, destination_y, pawn_x, pawn_y)
-        can_remove = self._game.canRemove(destination_x, destination_y, pawn_x, pawn_y)
+        will_kill_pawn = self._game.canRemove(destination_x, destination_y, pawn_x, pawn_y)
+
+        if must_kill == 1 and not will_kill_pawn:
+            return False
 
         if is_valid:
             self._game.movePawn(destination_x, destination_y, pawn_x, pawn_y)
-        if can_remove:
+        if will_kill_pawn:
             self._game.removePawn(destination_x, destination_y, pawn_x, pawn_y)
 
         return is_valid
 
     def can_move(self, pawn_field_x, pawn_field_y):
+        must_kill = self._game.mustKill(pawn_field_x, pawn_field_y)
         can_move = self._game.canMove(pawn_field_x, pawn_field_y)
 
-        return can_move
+        return {
+            'mustKill': must_kill,
+            'canMove': can_move
+        }
+
+    def can_move_queen(self, pawn_field_x, pawn_field_y):
+        can_move = self._game.canMoveQueen(pawn_field_x, pawn_field_y)
+
+        return {
+            'mustKill': 'unknown',
+            'canMove': can_move
+        }
 
     def get_board(self):
         result = []
@@ -89,9 +104,14 @@ def canMove(params):
     pawn_field_y = int(params["pawnFieldY"])
     can_move = get_game_state().can_move(pawn_field_x, pawn_field_y)
 
-    return {
-        'canMove': can_move
-    }
+    return can_move
+
+def canMoveQueen(params):
+    pawn_field_x = int(params["pawnFieldX"])
+    pawn_field_y = int(params["pawnFieldY"])
+    can_move = get_game_state().can_move_queen(pawn_field_x, pawn_field_y)
+
+    return can_move
 
 def handleMove(params):
 
@@ -99,8 +119,11 @@ def handleMove(params):
     destination_y = int(params["destinationY"])
     pawn_x = int(params["pawnX"])
     pawn_y = int(params["pawnY"])
+    must_kill = int(params["mustKill"])
+    logging.warning("must_kill")
+    logging.warning(must_kill)
 
-    is_moved = get_game_state().validate_move(destination_x, destination_y, pawn_x, pawn_y)
+    is_moved = get_game_state().validate_move(destination_x, destination_y, pawn_x, pawn_y, must_kill)
 
     return {
         'isMoved': is_moved

@@ -50,11 +50,16 @@ void Board::movePawn(int newX, int newY, int oldX, int oldY) {
         throw std::invalid_argument("Invalid coordinates");
     };
 
+
     boardMatrix_[newX][newY].setPawn(&boardMatrix_[oldX][oldY].getPawn());
     boardMatrix_[newX][newY].setHasPawn(true);
 
-//    todo: check if pawn got to field in which converts to queen
-//    boardMatrix_[newX][newY].getPawn().setQueen();
+    if (!boardMatrix_[newX][newY].getPawn().isQueen()) {
+        if ((newY > oldY && newY == 7 && boardMatrix_[newX][newY].getPawn().getY() < 4)
+            || (newY < oldY && newY == 0) && boardMatrix_[newX][newY].getPawn().getY() > 4 ) {
+            boardMatrix_[newX][newY].getPawn().setQueen(true);
+        }
+    }
 
     boardMatrix_[oldX][oldY].setHasPawn(false);
     boardMatrix_[oldX][oldY].setPawn(nullptr);

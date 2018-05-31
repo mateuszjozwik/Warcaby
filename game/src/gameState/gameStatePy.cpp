@@ -42,6 +42,14 @@ public:
         return Game::getInstance().canMove(x, y);
     }
 
+    bool mustKill(int x, int y) {
+        return Game::getInstance().mustKill(x, y);
+    }
+
+    bool canMoveQueen(int x, int y) {
+        return Game::getInstance().canMoveQueen(x, y);
+    }
+
     void movePawn(int destX, int destY, int pawnX, int pawnY) {
         return Game::getInstance().movePawn(destX, destY, pawnX, pawnY);
     }
@@ -100,6 +108,8 @@ BOOST_PYTHON_MODULE( game )
             .def("removePawn", &GameManagerPy::removePawn)
             .def("restartGame", &GameManagerPy::restartGame)
             .def("canMove", &GameManagerPy::canMove)
+            .def("canMoveQueen", &GameManagerPy::canMoveQueen)
+            .def("mustKill", &GameManagerPy::mustKill)
         ;
 
         }
