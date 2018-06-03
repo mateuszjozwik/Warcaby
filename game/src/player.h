@@ -16,13 +16,14 @@ public:
     Player(int num = 0);
     ~Player();
 
-    std::array<Pawn, 12>* getPlayerPawns();
+    std::array<Pawn, 4>* getPlayerPawns();
     Pawn& getPlayerPawn(int x, int y);
+    bool canPlayerKill() const;
 
     int num_;
 
 private:
-    std::array<Pawn, 12> playerPawns_;
+    std::array<Pawn, 4> playerPawns_;
     Pawn playerPawn_;
 };
 

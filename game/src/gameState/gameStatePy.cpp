@@ -42,15 +42,11 @@ public:
         return Game::getInstance().canMove(x, y);
     }
 
-    bool mustKill(int x, int y) {
-        return Game::getInstance().mustKill(x, y);
+    bool canPawnKill(int x, int y) {
+        return Game::getInstance().canPawnKill(x, y);
     }
 
-    bool canMoveQueen(int x, int y) {
-        return Game::getInstance().canMoveQueen(x, y);
-    }
-
-    bool canPlayerKill(int color) {
+    bool canPlayerKill(Color color) {
         return Game::getInstance().canPlayerKill(color);
     }
 
@@ -68,6 +64,15 @@ public:
 
     void restartGame() {
         return Game::getInstance().restartGame();
+    }
+
+
+    Color getLastMoveColor() {
+        return Game::getInstance().getLastMoveColor();
+    }
+
+    void setLastMoveColor(Color color) {
+        return Game::getInstance().setLastMoveColor(color);
     }
 };
 
@@ -90,7 +95,8 @@ BOOST_PYTHON_MODULE( game )
                 .def("isAlive", &Pawn::isAlive)
                 .def("isQueen", &Pawn::isQueen)
                 .def("getColor", &Pawn::getColor)
-            ;
+                .def("checkIfPawnCanKill", &Pawn::checkIfPawnCanKill)
+        ;
 
             class_<Field>("Field")
                 .def("getX", &Field::getX)
@@ -108,8 +114,10 @@ BOOST_PYTHON_MODULE( game )
                 .def("removePawn", &GameManagerPy::removePawn)
                 .def("restartGame", &GameManagerPy::restartGame)
                 .def("canMove", &GameManagerPy::canMove)
-                .def("canMoveQueen", &GameManagerPy::canMoveQueen)
-                .def("mustKill", &GameManagerPy::mustKill)
+                .def("canPawnKill", &GameManagerPy::canPawnKill)
                 .def("canPlayerKill", &GameManagerPy::canPlayerKill)
-            ;
+                .def("getLastMoveColor", &GameManagerPy::getLastMoveColor)
+                .def("setLastMoveColor", &GameManagerPy::setLastMoveColor)
+
+        ;
         }

@@ -4,6 +4,7 @@
 
 #include "./board.h"
 #include "player.h"
+#include "color.h"
 #include <memory>
 
 using namespace std;
@@ -41,7 +42,6 @@ public:
     bool goingInValidDirection(PField pawnField, PField destinationField);
     bool checkField(PField pawnField, int x, int y);
     bool checkQueenDirection(PField pawnField, int x, int y);
-
     bool validDistance(PField pawnField, PField destField) const;
     void movePawn(int destX, int destY, int pawnX, int pawnY);
     bool checkDirection(int yDiff, Color color) const;
@@ -49,17 +49,26 @@ public:
     bool isQueenKilling(const PField pawnField, const PField destField) const;
     void removePawn(int destX, int destY, int pawnX, int pawnY);
     bool canMove(int x, int y);
-    bool canMoveQueen(int x, int y);
     int pawnsOnPath(int pawnX, int pawnY, int fieldToGoX, int fieldToGoY, bool countEnemies = false) const;
     bool canGoToField(PField pawnField, PField destinationField);
     void removePawnByQueen(int pawnX, int pawnY, int fieldToGoX, int fieldToGoY);
     bool canKill(PField pawnField, int x, int y);
-    bool mustKill(int x, int y);
+    bool canPawnKill(int x, int y);
+    bool canPlayerKill(Color color) const;
+
+
+    Color getLastMoveColor();
+    Color getCurrentMoveColor();
+
+    void setLastMoveColor(Color color);
+    void setCurrentMoveColor(Color color);
 
 private:
     Board board_;
     Player player_;
     Player enemy_;
+    Color lastMoveColor_;
+    Color currentMoveColor_;
 };
 
 

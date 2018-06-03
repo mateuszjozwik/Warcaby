@@ -131,71 +131,37 @@ angular.module('myAppControllers', [])
         $scope.canChoose = function(field) {
             $scope.removeCanBeMovedClass();
             if (field.hasPawn) {
-                if (!field.pawn.isQueen) {
-                    gameCommands.canMove(field,
-                        function (data) {
-                            if (data.status === 200) {
-                                if (data.data.canMove) {
-                                    console.log(data.data.mustKill);
-                                    $scope.board[field.y][field.x].pawn.mustKill = data.data.mustKill;
-                                    $scope.board[field.y][field.x].pawn.canBeMoved = true;
-                                }
+                gameCommands.canMove(field,
+                    function (data) {
+                        if (data.status === 200) {
+                            if (data.data.canMove) {
+                                $scope.board[field.y][field.x].pawn.canPawnKill = data.data.canPawnKill;
+                                $scope.board[field.y][field.x].pawn.canBeMoved = true;
                             }
                         }
-                    );
-                }
-
-                if (field.pawn.isQueen) {
-                    gameCommands.canMoveQueen(field,
-                        function (data) {
-                            if (data.status === 200) {
-                                if (data.data.canMove) {
-                                    console.log(data.data.mustKill);
-                                    $scope.board[field.y][field.x].pawn.mustKill = 0;
-                                    $scope.board[field.y][field.x].pawn.canBeMoved = true;
-                                }
-                            }
-                        }
-                    );
-                }
+                    }
+                );
             }
         };
 
         $scope.choose = function(field) {
         	if (field.hasPawn) {
         	    var status = -1;
-                if (!field.pawn.isQueen) {
-                    gameCommands.canMove(field,
-                        function (data) {
-                            if (data.status === 200) {
-                                status = 200;
-                                if (data.data.canMove) {
-                                    $scope.hasToKill = $scope.board[field.y][field.x].pawn.mustKill;
-                                    console.log("hasToKill: " + $scope.hasToKill);
-                                    $scope.unChooseFields();
-                                    $scope.isPawnChosen = true;
-                                    $scope.chosenField = field;
-                                    field.pawn.chosen = true;
-                                }
+                gameCommands.canMove(field,
+                    function (data) {
+                        if (data.status === 200) {
+                            status = 200;
+                            if (data.data.canMove) {
+                                $scope.hasToKill = $scope.board[field.y][field.x].pawn.canPawnKill;
+                                console.log("hasToKill: " + $scope.hasToKill);
+                                $scope.unChooseFields();
+                                $scope.isPawnChosen = true;
+                                $scope.chosenField = field;
+                                field.pawn.chosen = true;
                             }
                         }
-                    );
-                } else {
-                    gameCommands.canMoveQueen(field,
-                        function (data) {
-                            if (data.status === 200) {
-                                if (data.data.canMove) {
-                                    console.log(field.pawn);
-                                    $scope.unChooseFields();
-                                    $scope.isPawnChosen = true;
-                                    $scope.chosenField = field;
-                                    field.pawn.chosen = true;
-                                }
-                            }
-                        }
-                    );
-                }
-
+                    }
+                );
             } else if ($scope.isPawnChosen) {
                 $scope.move(field);
 			}

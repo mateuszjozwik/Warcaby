@@ -23,6 +23,8 @@ class GAME_STATE_DLL( Pawn ) {
     bool isQueen_;
     int posx_;
     int posy_;
+    int initPosx_;
+    int initPosy_;
 public:
     Pawn(Color color_ = Color::WHITE, bool isAlive_ = true, bool isQueen_ = false, int posx = -1, int posy = -1);
     ~Pawn();
@@ -33,12 +35,18 @@ public:
     void promoteToQueen();
     void kill();
     void setQueen(bool isQueen);
+    bool checkIfPawnCanKill() const;
+    bool canKillInDirection(int dirX, int dirY) const;
 
-    int getX();
-    int getY();
+    int getX() const;
+    int getY() const;
 
     void setX(int x);
     void setY(int y);
+
+    int getInitY();
+    void initY(int y);
+
 };
 
 

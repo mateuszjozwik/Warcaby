@@ -13,6 +13,24 @@ Game& Game::getInstance() {
 
 void const Game::initGame() {
     board_.setPawns(player_, enemy_);
+    setCurrentMoveColor(Color::WHITE);
+    setLastMoveColor(Color::BLACK);
+}
+
+Color Game::getLastMoveColor() {
+    return lastMoveColor_;
+}
+
+Color Game::getCurrentMoveColor() {
+    return currentMoveColor_;
+}
+
+void Game::setCurrentMoveColor(Color color) {
+    currentMoveColor_ = color;
+}
+
+void Game::setLastMoveColor(Color color) {
+    lastMoveColor_ = color;
 }
 
 void Game::restartGame() {
@@ -23,16 +41,29 @@ void Game::restartGame() {
 
 bool Game::canMove(int x, int y) {
     auto pawnField = make_shared<Field>(this->getBoard().getField(x, y));
+    if (pawnField->getPawn().isQueen()) {
+        bool checkNE = checkQueenDirection(pawnField, 1, -1);
+        bool checkNW = checkQueenDirection(pawnField,-1, -1);
+        bool checkSE = checkQueenDirection(pawnField, 1, +1);
+        bool checkSW = checkQueenDirection(pawnField,-1, +1);
 
-    bool checkNE = checkField(pawnField,  1, -1);
-    bool checkNW = checkField(pawnField, -1, -1);
-    bool checkSE = checkField(pawnField,  1, +1);
-    bool checkSW = checkField(pawnField, -1, +1);
+        cout << checkNE << " " << checkNW << " " << checkSE << " " << checkSW << endl;
 
-    return (checkNE || checkNW || checkSE || checkSW);
+        return (checkNE || checkNW || checkSE || checkSW);
+
+    } else {
+        bool checkNE = checkField(pawnField,  1, -1);
+        bool checkNW = checkField(pawnField, -1, -1);
+        bool checkSE = checkField(pawnField,  1, +1);
+        bool checkSW = checkField(pawnField, -1, +1);
+
+        cout << checkNE << " " << checkNW << " " << checkSE << " " << checkSW << endl;
+
+        return (checkNE || checkNW || checkSE || checkSW);
+    }
 }
 
-bool Game::mustKill(int x, int y) {
+bool Game::canPawnKill(int x, int y) {
     auto pawnField = make_shared<Field>(this->getBoard().getField(x, y));
 
     bool canKillNE = canKill(pawnField,  1, -1);
@@ -42,17 +73,6 @@ bool Game::mustKill(int x, int y) {
 
     return (canKillNE || canKillNW || canKillSE || canKillSW);
 
-}
-
-bool Game::canMoveQueen(int x, int y) {
-    auto pawnField = make_shared<Field>(this->getBoard().getField(x, y));
-
-    bool checkNE = checkQueenDirection(pawnField, 1, -1);
-    bool checkNW = checkQueenDirection(pawnField,-1, -1);
-    bool checkSE = checkQueenDirection(pawnField, 1, +1);
-    bool checkSW = checkQueenDirection(pawnField,-1, +1);
-
-    return (checkNE || checkNW || checkSE || checkSW);
 }
 
 bool Game::checkQueenDirection(PField pawnField, int x, int y) {
@@ -67,7 +87,7 @@ bool Game::checkQueenDirection(PField pawnField, int x, int y) {
     //Check if can move without killing
     while(fieldOnBoard(fieldX, fieldY)) {
         auto destinationField = make_shared<Field>(this->getBoard().getField(fieldX, fieldY));
-        if (!destinationField.get()->hasPawn()) {
+        if (!destinationField.get()->hasPawn() && pawnsOnPath(pawnX, pawnY ,fieldX, fieldY) == 0) {
             canMove = true;
             break;
         }
@@ -80,7 +100,7 @@ bool Game::checkQueenDirection(PField pawnField, int x, int y) {
     int fieldToGoX = pawnX + 2*x;
     int fieldToGoY = pawnY + 2*y;
     while(fieldOnBoard(fieldToGoX, fieldToGoY)) {
-        if(pawnsOnPath(pawnX, pawnY, fieldToGoX, fieldToGoY, false) < 2) {
+        if(pawnsOnPath(pawnX, pawnY, fieldToGoX, fieldToGoY, true) < 2) {
             canMove = true;
         }
         fieldToGoX = fieldToGoX + x;
@@ -107,13 +127,14 @@ int Game::pawnsOnPath(int pawnX, int pawnY, int fieldToGoX, int fieldToGoY, bool
 
     int pawnsCount = 0;
     auto pawnField = make_shared<Field>(this->getBoard().getField(pawnX, pawnY));
+    auto fieldToGo = make_shared<Field>(this->getBoard().getField(fieldToGoX, fieldToGoY));
 
     while (currentFieldX != fieldToGoX && currentFieldY != fieldToGoY) {
         auto currentField = make_shared<Field>(this->getBoard().getField(currentFieldX, currentFieldY));
 
         if (countEnemies) {
             if (currentField->hasPawn()) {
-                if (currentField->getPawn().getColor() != pawnField->getPawn().getColor()) {
+                if (!fieldToGo->hasPawn() && currentField->getPawn().getColor() != pawnField->getPawn().getColor()) {
                     pawnsCount++;
                 } else {
                     return 500;
@@ -207,7 +228,7 @@ bool Game::fieldToKillOnBoard(int x, int y) {
 
 bool Game::goingInValidDirection(PField pawnField, PField destinationField) {
     //Fields which were in rows 0-2 at the beginning of game can only go to rows 3-7
-    if (pawnField.get()->getPawn().getY()<3) {
+    if (pawnField.get()->getPawn().getInitY()<3) {
         return (destinationField.get()->getY() > pawnField.get()->getY());
     } else {
         return (destinationField.get()->getY() < pawnField.get()->getY());
@@ -334,18 +355,7 @@ void Game::movePawn(int destX, int destY, int pawnX, int pawnY) {
 }
 
 void Game::removePawn(int destX, int destY, int pawnX, int pawnY) {
-
-    //Destination as argument for pawn field cause it's already moved
-    auto pawnField = make_shared<Field>(this->getBoard().getField(destX, destY));
-
-    if (pawnField->getPawn().isQueen()) {
-        removePawnByQueen(destX, destY, pawnX, pawnY);
-    }
-
-    int victimX = (pawnX + destX)/2;
-    int victimY = (pawnY + destY)/2;
-
-    this->getBoardMutable().removePawn(victimX, victimY);
+    removePawnByQueen(destX, destY, pawnX, pawnY);
 }
 
 bool Game::checkDirection(int yDiff, Color color) const {
@@ -355,8 +365,6 @@ bool Game::checkDirection(int yDiff, Color color) const {
             return (yDiff>0);
         case Color::BLACK:
             return (yDiff<0);
-        default:
-            return false;
     }
 }
 
@@ -389,5 +397,20 @@ void Game::removePawnByQueen(int pawnX, int pawnY, int fieldToGoX, int fieldToGo
 
         currentFieldX += directionX;
         currentFieldY += directionY;
+    }
+}
+
+bool Game::canPlayerKill(Color color) const {
+    switch (color) {
+        case Color::WHITE: {
+            bool canKill = player_.canPlayerKill();
+            cout << "CAN KILL: " << canKill << endl;
+            return canKill;
+        }
+        case Color::BLACK: {
+            bool canKill = enemy_.canPlayerKill();
+            cout << "CAN KILL: " << canKill << endl;
+            return canKill;
+        }
     }
 }

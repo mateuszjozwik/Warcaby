@@ -28,6 +28,9 @@ public:
     Field();
     Field(int xPos, int yPos, bool isGameField, bool hasPawn_ = false);
 
+    int getXConst() const;
+    int getYConst() const;
+
     int getX();
     int getY();
 

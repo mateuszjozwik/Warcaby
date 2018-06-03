@@ -21,6 +21,14 @@ int Field::getY() {
     return yPos_;
 }
 
+int Field::getXConst() const {
+    return xPos_;
+}
+
+int Field::getYConst() const {
+    return yPos_;
+}
+
 bool Field::hasPawn() const {
     return hasPawn_;
 }
