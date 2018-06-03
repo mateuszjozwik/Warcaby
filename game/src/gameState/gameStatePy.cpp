@@ -50,6 +50,10 @@ public:
         return Game::getInstance().canMoveQueen(x, y);
     }
 
+    bool canPlayerKill(int color) {
+        return Game::getInstance().canPlayerKill(color);
+    }
+
     void movePawn(int destX, int destY, int pawnX, int pawnY) {
         return Game::getInstance().movePawn(destX, destY, pawnX, pawnY);
     }
@@ -72,44 +76,40 @@ public:
  */
 BOOST_PYTHON_MODULE( game )
         {
-         enum_<Color>("Color")
+            enum_<Color>("Color")
                  .value("WHITE", Color::WHITE)
                  .value("BLACK", Color::BLACK);
 
-        class_<Board>("Board")
-            .def("getField", &Board::getField, return_value_policy<reference_existing_object>())
-        ;
+            class_<Board>("Board")
+                .def("getField", &Board::getField, return_value_policy<reference_existing_object>())
+            ;
 
-        class_<Pawn>("Pawn")
-            .def("getX", &Pawn::getX)
-            .def("getY", &Pawn::getY)
-            .def("isAlive", &Pawn::isAlive)
-            .def("isQueen", &Pawn::isQueen)
-            .def("getColor", &Pawn::getColor)
-            .def("kill", &Pawn::kill)
-        ;
+            class_<Pawn>("Pawn")
+                .def("getX", &Pawn::getX)
+                .def("getY", &Pawn::getY)
+                .def("isAlive", &Pawn::isAlive)
+                .def("isQueen", &Pawn::isQueen)
+                .def("getColor", &Pawn::getColor)
+            ;
 
-        class_<Field>("Field")
-            .def("getX", &Field::getX)
-            .def("getY", &Field::getY)
-            .def("hasPawn", &Field::hasPawn)
-            .def("getPawn", &Field::getPawn, return_value_policy<reference_existing_object>())
-            .def("removePawn", &Field::removePawn)
-            .def("isGameField", &Field::isGameField)
-            .def("setPawn", &Field::setPawn)
+            class_<Field>("Field")
+                .def("getX", &Field::getX)
+                .def("getY", &Field::getY)
+                .def("hasPawn", &Field::hasPawn)
+                .def("getPawn", &Field::getPawn, return_value_policy<reference_existing_object>())
+                .def("isGameField", &Field::isGameField)
+            ;
 
-        ;
-
-        class_<GameManagerPy>("Game")
-            .def("getBoard", &GameManagerPy::getBoard, return_value_policy<reference_existing_object>())
-            .def("validateMove", &GameManagerPy::validateMove)
-            .def("canRemove", &GameManagerPy::canRemove)
-            .def("movePawn", &GameManagerPy::movePawn)
-            .def("removePawn", &GameManagerPy::removePawn)
-            .def("restartGame", &GameManagerPy::restartGame)
-            .def("canMove", &GameManagerPy::canMove)
-            .def("canMoveQueen", &GameManagerPy::canMoveQueen)
-            .def("mustKill", &GameManagerPy::mustKill)
-        ;
-
+            class_<GameManagerPy>("Game")
+                .def("getBoard", &GameManagerPy::getBoard, return_value_policy<reference_existing_object>())
+                .def("validateMove", &GameManagerPy::validateMove)
+                .def("canRemove", &GameManagerPy::canRemove)
+                .def("movePawn", &GameManagerPy::movePawn)
+                .def("removePawn", &GameManagerPy::removePawn)
+                .def("restartGame", &GameManagerPy::restartGame)
+                .def("canMove", &GameManagerPy::canMove)
+                .def("canMoveQueen", &GameManagerPy::canMoveQueen)
+                .def("mustKill", &GameManagerPy::mustKill)
+                .def("canPlayerKill", &GameManagerPy::canPlayerKill)
+            ;
         }

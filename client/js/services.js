@@ -51,6 +51,7 @@ angular.module('myAppServices', [])
                     params: {
                         pawnFieldX: pawnField.x,
                         pawnFieldY: pawnField.y,
+                        playerColor: pawnField.pawn.color,
                     }
                 }).then(callback);
             };

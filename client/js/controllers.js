@@ -105,8 +105,8 @@ angular.module('myAppControllers', [])
                         cell.pawn.isAlive = $scope.boardData[x][y].pawn.isAlive;
                         cell.pawn.isQueen = $scope.boardData[x][y].pawn.isQueen;
                         cell.pawn.color = $scope.boardData[x][y].pawn.color;
-                        cell.pawn.x = $scope.boardData[x][y].position.x;
-                        cell.pawn.y = $scope.boardData[x][y].position.y;
+                        cell.pawn.x = $scope.boardData[x][y].pawn.x;
+                        cell.pawn.y = $scope.boardData[x][y].pawn.y;
                         cell.pawn.chosen = false;
                     }
 
