@@ -183,7 +183,7 @@ bool Game::checkMove(PField pawnField, int x, int y) {
     return false;
 }
 
-bool Game::canKill(PField pawnField, int x, int y) {
+bool Game::canKill(PField pawnField, int x, int y) const {
     int pawnX = pawnField->getX();
     int pawnY = pawnField->getY();
     int victimX = pawnX+x;
@@ -207,12 +207,12 @@ bool Game::canKill(PField pawnField, int x, int y) {
     return false;
 }
 
-bool Game::fieldOnBoard(int x, int y) {
+bool Game::fieldOnBoard(int x, int y) const {
     return (x>-1 && x<8)
            && (y>-1 && y<8);
 }
 
-bool Game::goingInValidDirection(PField pawnField, PField destinationField) {
+bool Game::goingInValidDirection(const PField pawnField, const PField destinationField) const {
     //Fields which were in rows 0-2 at the beginning of game can only go to rows 3-7
     if (pawnField.get()->getPawn().getInitY()<3) {
         return (destinationField.get()->getY() > pawnField.get()->getY());
@@ -293,14 +293,12 @@ bool Game::validDistance(const PField pawnField, const PField destField) const {
     int xDiff = destField.get()->getX() - pawnField.get()->getX();
     int yDiff = destField.get()->getY() - pawnField.get()->getY();
 
-    bool isValidDirection = checkDirection(yDiff, pawnField.get()->getPawn().getColor());
-
     if (abs(xDiff) == abs(yDiff)) {
         switch (abs(xDiff)) {
             case 1:
-                return isValidDirection;
+                return goingInValidDirection(pawnField, destField);
             case 2:
-                return isKilling(pawnField, destField);
+                return isKilling(pawnField, destField);;
             default:
                 return false;
         }
@@ -345,16 +343,6 @@ void Game::removePawn(int pawnX, int pawnY, int fieldToGoX, int fieldToGoY) {
 
         currentFieldX += directionX;
         currentFieldY += directionY;
-    }
-}
-
-bool Game::checkDirection(int yDiff, Color color) const {
-
-    switch(color) {
-        case Color::WHITE:
-            return (yDiff>0);
-        case Color::BLACK:
-            return (yDiff<0);
     }
 }
 

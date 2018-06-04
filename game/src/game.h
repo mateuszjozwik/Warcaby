@@ -48,10 +48,10 @@ public:
     bool canRemove(int destX, int destY, int pawnX, int pawnY) const;
 
     /// @returns true if field is in scope of the board
-    bool fieldOnBoard(int x, int y);
+    bool fieldOnBoard(int x, int y) const;
 
     /// @returns true if pawn is going in correct direction
-    bool goingInValidDirection(PField pawnField, PField destinationField);
+    bool goingInValidDirection(const PField pawnField, const PField destinationField) const;
 
     /// @returns true if pawn can go in direction specified by x and y
     bool checkMove(PField pawnField, int x, int y);
@@ -63,19 +63,34 @@ public:
     bool validDistance(PField pawnField, PField destField) const;
 
     void movePawn(int destX, int destY, int pawnX, int pawnY);
-    bool checkDirection(int yDiff, Color color) const;
     bool isKilling(const PField pawnField, const PField destField) const;
+
+    /// removes pawn which was placed between pawn and its destination
     void removePawn(int destX, int destY, int pawnX, int pawnY);
+
+    /// @returns true if chosen pawn can be moved
     bool canMove(int x, int y);
+
+    /// @returns amount of pawns between pawn and destination
     int pawnsOnPath(int pawnX, int pawnY, int fieldToGoX, int fieldToGoY, bool countEnemies = false) const;
+
+    /// removes pawn after Queen has killed id
     void removePawnByQueen(int pawnX, int pawnY, int fieldToGoX, int fieldToGoY);
-    bool canKill(PField pawnField, int x, int y);
+
+    /// @returns true if chosen pawn can perform kill in direction specified by x and y
+    bool canKill(const PField pawnField, int x, int y) const;
+
+    /// @returns true if chosen pawn can perform kill
     bool canPawnKill(int x, int y);
+
+    /// @returns true if any pawn of chosen color can perform kill
     bool canPlayerKill(Color color) const;
 
+    /// @returns true if last performed move resulted in a kill
     bool lastMoveKilled();
     void setLastMoveKilled(bool lastMoveKilled);
 
+    /// @returns color of player which performed last move
     Color getLastMoveColor();
     void setLastMoveColor(Color color);
 
