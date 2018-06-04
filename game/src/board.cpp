@@ -40,6 +40,7 @@ void Board::resetBoard(Player &player_) {
     for (Pawn& pawn: pawns->_M_elems) {
         pawn.setX(-1);
         pawn.setY(-1);
+        pawn.initY(-1);
         pawn.setQueen(false);
     }
 }
@@ -138,5 +139,14 @@ void Board::addPawn(Player &player_, int x, int y, Color color) {
         }
     } else {
         throw std::invalid_argument("Can not add pawn on this field");
+    }
+}
+
+void Board::clearBoard() {
+    for (unsigned int x = 0; x < WIDTH; ++x) {
+        for (unsigned int y = 0; y < HEIGHT; ++y) {
+            boardMatrix_[x][y].setPawn(nullptr);
+            boardMatrix_[x][y].setHasPawn(false);
+        }
     }
 }

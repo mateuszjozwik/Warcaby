@@ -9,11 +9,21 @@
 #include <boost/test/unit_test.hpp>
 
 #include "../src/board.h"
+#include "../src/game.h"
 
 using namespace boost;
 using boost::unit_test::test_suite;
 
 BOOST_AUTO_TEST_SUITE(game_test)
+
+BOOST_AUTO_TEST_CASE(InitGameEmptyBoard) {
+        Board b = Game::getInstance().getBoard();
+        for(unsigned x = 0; x<Board::WIDTH; ++x) {
+            for(unsigned y = 0; y<Board::HEIGHT; ++y){
+                BOOST_CHECK(!b.getBoardMatrix()[x][y].hasPawn());
+            }
+        }
+}
 
 BOOST_AUTO_TEST_CASE(DefaultEmptyBoard) {
     Board b;

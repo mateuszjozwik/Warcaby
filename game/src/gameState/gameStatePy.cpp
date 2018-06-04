@@ -74,6 +74,18 @@ public:
     void setLastMoveColor(Color color) {
         return Game::getInstance().setLastMoveColor(color);
     }
+
+    bool lastMoveKilled() {
+        return Game::getInstance().lastMoveKilled();
+    }
+
+    void setLastMoveKilled(bool lastMoveKilled) {
+        return Game::getInstance().setLastMoveKilled(lastMoveKilled);
+    }
+
+    void initGame() {
+        return Game::getInstance().initGame();
+    }
 };
 
 /**
@@ -107,6 +119,7 @@ BOOST_PYTHON_MODULE( game )
             ;
 
             class_<GameManagerPy>("Game")
+                .def("initGame", &GameManagerPy::initGame)
                 .def("getBoard", &GameManagerPy::getBoard, return_value_policy<reference_existing_object>())
                 .def("validateMove", &GameManagerPy::validateMove)
                 .def("canRemove", &GameManagerPy::canRemove)
@@ -118,6 +131,8 @@ BOOST_PYTHON_MODULE( game )
                 .def("canPlayerKill", &GameManagerPy::canPlayerKill)
                 .def("getLastMoveColor", &GameManagerPy::getLastMoveColor)
                 .def("setLastMoveColor", &GameManagerPy::setLastMoveColor)
+                .def("setLastMoveKilled", &GameManagerPy::setLastMoveKilled)
+                .def("lastMoveKilled", &GameManagerPy::lastMoveKilled)
 
         ;
         }

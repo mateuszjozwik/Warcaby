@@ -3,7 +3,6 @@
 #include <iostream>
 #include "math.h"
 Game::Game() {
-    initGame();
 }
 
 Game& Game::getInstance() {
@@ -13,20 +12,20 @@ Game& Game::getInstance() {
 
 void const Game::initGame() {
     board_.setPawns(player_, enemy_);
-    setCurrentMoveColor(Color::WHITE);
     setLastMoveColor(Color::BLACK);
+    setLastMoveKilled(false);
 }
 
 Color Game::getLastMoveColor() {
     return lastMoveColor_;
 }
 
-Color Game::getCurrentMoveColor() {
-    return currentMoveColor_;
+bool Game::lastMoveKilled() {
+    return lastMoveKilled_;
 }
 
-void Game::setCurrentMoveColor(Color color) {
-    currentMoveColor_ = color;
+void Game::setLastMoveKilled(bool lastMoveKilled) {
+    lastMoveKilled_ = lastMoveKilled;
 }
 
 void Game::setLastMoveColor(Color color) {
@@ -37,27 +36,25 @@ void Game::restartGame() {
     board_.resetBoard(player_);
     board_.resetBoard(enemy_);
     board_.setPawns(player_, enemy_);
+    setLastMoveColor(Color::BLACK);
+    setLastMoveKilled(false);
 }
 
 bool Game::canMove(int x, int y) {
     auto pawnField = make_shared<Field>(this->getBoard().getField(x, y));
     if (pawnField->getPawn().isQueen()) {
-        bool checkNE = checkQueenDirection(pawnField, 1, -1);
-        bool checkNW = checkQueenDirection(pawnField,-1, -1);
-        bool checkSE = checkQueenDirection(pawnField, 1, +1);
-        bool checkSW = checkQueenDirection(pawnField,-1, +1);
-
-        cout << checkNE << " " << checkNW << " " << checkSE << " " << checkSW << endl;
+        bool checkNE = checkQueenMove(pawnField, 1, -1);
+        bool checkNW = checkQueenMove(pawnField,-1, -1);
+        bool checkSE = checkQueenMove(pawnField, 1, +1);
+        bool checkSW = checkQueenMove(pawnField,-1, +1);
 
         return (checkNE || checkNW || checkSE || checkSW);
 
     } else {
-        bool checkNE = checkField(pawnField,  1, -1);
-        bool checkNW = checkField(pawnField, -1, -1);
-        bool checkSE = checkField(pawnField,  1, +1);
-        bool checkSW = checkField(pawnField, -1, +1);
-
-        cout << checkNE << " " << checkNW << " " << checkSE << " " << checkSW << endl;
+        bool checkNE = checkMove(pawnField,  1, -1);
+        bool checkNW = checkMove(pawnField, -1, -1);
+        bool checkSE = checkMove(pawnField,  1, +1);
+        bool checkSW = checkMove(pawnField, -1, +1);
 
         return (checkNE || checkNW || checkSE || checkSW);
     }
@@ -75,7 +72,7 @@ bool Game::canPawnKill(int x, int y) {
 
 }
 
-bool Game::checkQueenDirection(PField pawnField, int x, int y) {
+bool Game::checkQueenMove(PField pawnField, int x, int y) {
     int pawnX = pawnField->getX();
     int pawnY = pawnField->getY();
 
@@ -153,7 +150,7 @@ int Game::pawnsOnPath(int pawnX, int pawnY, int fieldToGoX, int fieldToGoY, bool
     return pawnsCount;
 }
 
-bool Game::checkField(PField pawnField, int x, int y) {
+bool Game::checkMove(PField pawnField, int x, int y) {
     int pawnX = pawnField->getX();
     int pawnY = pawnField->getY();
     int fieldX = pawnX+x;
@@ -210,20 +207,9 @@ bool Game::canKill(PField pawnField, int x, int y) {
     return false;
 }
 
-bool Game::canGoToField(PField pawnField, PField destinationField) {
-//    todo: implement
-
-    return false;
-}
-
 bool Game::fieldOnBoard(int x, int y) {
     return (x>-1 && x<8)
            && (y>-1 && y<8);
-}
-
-bool Game::fieldToKillOnBoard(int x, int y) {
-    return (x>0 && x<7)
-           && (y>0 && y<7);
 }
 
 bool Game::goingInValidDirection(PField pawnField, PField destinationField) {
@@ -241,10 +227,6 @@ const Board& Game::getBoard() const {
 
 Board& Game::getBoardMutable() {
     return board_;
-}
-
-Player Game::getPlayer() const {
-    return player_;
 }
 
 bool Game::validateMove(int destX, int destY, int pawnX, int pawnY) const {
@@ -306,29 +288,6 @@ bool Game::isKilling(const PField pawnField, const PField destField) const {
     }
 }
 
-bool Game::isQueenKilling(const PField pawnField, const PField destField) const {
-
-    //coordinates of pawn which will be removed
-    int from = pawnField->getX();
-    int to = destField->getX();
-
-    if (from > to) {
-        for (int i=from+1 ; i<to ; i++) {
-            if (this->getBoard().getField(i, i).hasPawn()) {
-                return true;
-            }
-        }
-        return false;
-    } else {
-        for (int i=to+1 ; i<from ; i++) {
-            if (this->getBoard().getField(i, i).hasPawn()) {
-                return true;
-            }
-        }
-        return false;
-    }
-}
-
 bool Game::validDistance(const PField pawnField, const PField destField) const {
 
     int xDiff = destField.get()->getX() - pawnField.get()->getX();
@@ -351,25 +310,14 @@ bool Game::validDistance(const PField pawnField, const PField destField) const {
 }
 
 void Game::movePawn(int destX, int destY, int pawnX, int pawnY) {
-    this->getBoardMutable().movePawn(destX, destY, pawnX, pawnY);
-}
-
-void Game::removePawn(int destX, int destY, int pawnX, int pawnY) {
-    removePawnByQueen(destX, destY, pawnX, pawnY);
-}
-
-bool Game::checkDirection(int yDiff, Color color) const {
-
-    switch(color) {
-        case Color::WHITE:
-            return (yDiff>0);
-        case Color::BLACK:
-            return (yDiff<0);
+    auto destinationField = make_shared<Field>(this->getBoard().getField(destX, destY));
+    auto pawnField = make_shared<Field>(this->getBoard().getField(pawnX, pawnY));
+    if (!destinationField->hasPawn() && pawnField->hasPawn()) {
+        this->getBoardMutable().movePawn(destX, destY, pawnX, pawnY);
     }
 }
 
-void Game::removePawnByQueen(int pawnX, int pawnY, int fieldToGoX, int fieldToGoY) {
-
+void Game::removePawn(int pawnX, int pawnY, int fieldToGoX, int fieldToGoY) {
     int directionX = 1;
     if (fieldToGoX < pawnX) {
         directionX = -1;
@@ -397,6 +345,16 @@ void Game::removePawnByQueen(int pawnX, int pawnY, int fieldToGoX, int fieldToGo
 
         currentFieldX += directionX;
         currentFieldY += directionY;
+    }
+}
+
+bool Game::checkDirection(int yDiff, Color color) const {
+
+    switch(color) {
+        case Color::WHITE:
+            return (yDiff>0);
+        case Color::BLACK:
+            return (yDiff<0);
     }
 }
 

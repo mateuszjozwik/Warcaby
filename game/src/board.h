@@ -38,6 +38,7 @@ public:
     void removePawn(int x, int y);
     void resetBoard(Player &player_);
     void addPawn(Player &player_, int x, int y, Color color);
+    void clearBoard();
 
     BoardMatrix& getBoardMatrix();
 

@@ -20,6 +20,7 @@ class State:
 
     def init_game(self):
         self._game = game.Game()
+        self._game.initGame()
 
     # this function check all pre-requisitions for performing the move and if they are met, movement is performed
     def validate_move(self, destination_x, destination_y, pawn_x, pawn_y, must_kill):
@@ -42,9 +43,11 @@ class State:
             self._game.setLastMoveColor(player_color)
             self._game.movePawn(destination_x, destination_y, pawn_x, pawn_y)
 
+        self._game.setLastMoveKilled(False)
         # remove pawn from the board if performing selected move results in killing enemy's pawn
         if will_kill_pawn:
             self._game.removePawn(destination_x, destination_y, pawn_x, pawn_y)
+            self._game.setLastMoveKilled(True)
 
         return is_valid
 
@@ -54,34 +57,43 @@ class State:
         board = self._game.getBoard()
         pawn = board.getField(x, y).getPawn()
 
-        # current_move_color = self._game.getCurrentMoveColor()
         last_move_color = self._game.getLastMoveColor()
         selected_pawn_color = pawn.getColor()
         can_kill = self._game.canPlayerKill(last_move_color)
-        will_kill = False
-        if (last_move_color is selected_pawn_color and can_kill and will_kill) or \
-                (last_move_color is selected_pawn_color and not can_kill):
+        last_move_killed = self._game.lastMoveKilled()
+        # will_kill = False
+        # if (last_move_color is selected_pawn_color and can_kill and will_kill) or \
+        #         (last_move_color is selected_pawn_color and not can_kill):
+
+        logging.warning(last_move_color)
+        logging.warning(selected_pawn_color)
+        logging.warning(last_move_killed)
+        logging.warning(can_kill)
+
+        if (last_move_color is selected_pawn_color and last_move_killed and can_kill) \
+                or (last_move_color is not selected_pawn_color):
+
+            # checks if selected Pawn can move in any direction
+            can_move = self._game.canMove(x, y)
+
+            # checks if selected Pawn has an opportunity to kill enemy's pawn
+            can_kill = board.getField(x, y).getPawn().checkIfPawnCanKill()
+
+            if not can_kill:
+                can_any_pawn_kill = self._game.canPlayerKill(board.getField(x, y).getPawn().getColor())
+
+                if can_any_pawn_kill and not can_kill:
+                    can_move = False
+
+            return {
+                'canPawnKill': can_kill,
+                'canMove': can_move
+            }
+        else:
             return {
                 'canPawnKill': False,
                 'canMove': False
             }
-
-        # checks if selected Pawn can move in any direction
-        can_move = self._game.canMove(x, y)
-
-        # checks if selected Pawn has an opportunity to kill enemy's pawn
-        can_kill = board.getField(x, y).getPawn().checkIfPawnCanKill()
-
-        if not can_kill:
-            can_any_pawn_kill = self._game.canPlayerKill(board.getField(x, y).getPawn().getColor())
-
-            if can_any_pawn_kill and not can_kill:
-                can_move = False
-
-        return {
-            'canPawnKill': can_kill,
-            'canMove': can_move
-        }
 
     # return array of fields with all 'front-end-required' information about each field
     def get_board(self):

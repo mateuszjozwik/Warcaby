@@ -40,41 +40,51 @@ public:
     Game();
     Game(Game const &) = delete;
     void operator=(Game const &) = delete;
-    Player getPlayer() const;
+
+    /// @returns true if move can be performed
     bool validateMove(int destX, int destY, int pawnX, int pawnY) const;
+
+    /// @returns true if pawn can be removed
     bool canRemove(int destX, int destY, int pawnX, int pawnY) const;
+
+    /// @returns true if field is in scope of the board
     bool fieldOnBoard(int x, int y);
-    bool fieldToKillOnBoard(int x, int y);
+
+    /// @returns true if pawn is going in correct direction
     bool goingInValidDirection(PField pawnField, PField destinationField);
-    bool checkField(PField pawnField, int x, int y);
-    bool checkQueenDirection(PField pawnField, int x, int y);
+
+    /// @returns true if pawn can go in direction specified by x and y
+    bool checkMove(PField pawnField, int x, int y);
+
+    /// @returns true if Queen can go in direction specified by x and y
+    bool checkQueenMove(PField pawnField, int x, int y);
+
+    /// @returns true if distance between current and destination field is correct
     bool validDistance(PField pawnField, PField destField) const;
+
     void movePawn(int destX, int destY, int pawnX, int pawnY);
     bool checkDirection(int yDiff, Color color) const;
     bool isKilling(const PField pawnField, const PField destField) const;
-    bool isQueenKilling(const PField pawnField, const PField destField) const;
     void removePawn(int destX, int destY, int pawnX, int pawnY);
     bool canMove(int x, int y);
     int pawnsOnPath(int pawnX, int pawnY, int fieldToGoX, int fieldToGoY, bool countEnemies = false) const;
-    bool canGoToField(PField pawnField, PField destinationField);
     void removePawnByQueen(int pawnX, int pawnY, int fieldToGoX, int fieldToGoY);
     bool canKill(PField pawnField, int x, int y);
     bool canPawnKill(int x, int y);
     bool canPlayerKill(Color color) const;
 
+    bool lastMoveKilled();
+    void setLastMoveKilled(bool lastMoveKilled);
 
     Color getLastMoveColor();
-    Color getCurrentMoveColor();
-
     void setLastMoveColor(Color color);
-    void setCurrentMoveColor(Color color);
 
 private:
     Board board_;
     Player player_;
     Player enemy_;
     Color lastMoveColor_;
-    Color currentMoveColor_;
+    bool lastMoveKilled_;
 };
 
 

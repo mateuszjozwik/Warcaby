@@ -28,8 +28,6 @@ Pawn& Player::getPlayerPawn(int x, int y) {
 bool Player::canPlayerKill() const {
     for (const Pawn& pawn: playerPawns_) {
         if (pawn.isAlive() && pawn.checkIfPawnCanKill()) {
-            cout << "X: " << pawn.getX() << " Y: " << pawn.getY() << " Is alive: " << pawn.isAlive() << " Can Kill: " << pawn.checkIfPawnCanKill() << endl;
-
             return true;
         }
     }

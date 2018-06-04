@@ -1,13 +1,4 @@
 {
-    "MAIN" : "Main screen",
-
-   	"TIME" : "server time",
-   	"SRV_VER" : "server version",
-   	"DB_VER" : "db version",
-   	"CLI_VER" : "client version",
-	"COMMANDS_NUMBER" : "commands number",
-	"START_NEW_COMMAND" : "start new command",
-	"CPP_COMMANDS" : "c++ commands list",
-	"STATE" : "state",
-	"PROGRESS" : "progress"
+	"welcome": "Warcaby rosyjskie!",
+	"restart_game": "Zrestartuj grę"
 }

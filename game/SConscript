@@ -76,5 +76,9 @@ elif(platform.system() == "Windows"):
 test_src = [
 	'tests/game_test.cpp',
 	'tests/player_test.cpp',
+	'tests/board_test.cpp',
+	'tests/pawn_test.cpp',
+	'tests/pawn_kill_test.cpp',
+	'tests/pawn_move_test.cpp',
 ]
 env_test.Program(target="game_logic_test", source=test_src)
