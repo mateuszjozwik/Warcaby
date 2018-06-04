@@ -12,11 +12,9 @@ Pawn::Pawn(Color color, bool isAlive, bool isQueen, int x, int y)
           isQueen_(isQueen),
           posx_(x),
           posy_(y){
-    std::cout << "P ";
 }
 
 Pawn::~Pawn() {
-    std::cout << "DP ";
 }
 
 Color Pawn::getColor() const {

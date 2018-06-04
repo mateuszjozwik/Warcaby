@@ -65,13 +65,16 @@ env_dll.Command(target, cpplib, copyLibBuilder )
 
 
 #build tests
-#env_test = env.Clone()
-#
-#if(platform.system() == "Linux"):
-#   env_test.Append( LIBS = [ 'python3.5m', 'boost_unit_test_framework' ] )
-#   env_test.Prepend( LIBS = 'calc' )
-#elif(platform.system() == "Windows"):
-#   env_test.Prepend( LIBS = 'calc' )
-#env_test.Program( target = "calc_test", source = 'tests/calc_test.cpp')
+env_test = env.Clone()
 
-''
+if(platform.system() == "Linux"):
+   env_test.Append( LIBS = [ 'python3.5m', 'boost_unit_test_framework' ] )
+   env_test.Prepend( LIBS = 'game' )
+elif(platform.system() == "Windows"):
+   env_test.Prepend( LIBS = 'game' )
+
+test_src = [
+	'tests/game_test.cpp',
+	'tests/player_test.cpp',
+]
+env_test.Program(target="game_logic_test", source=test_src)

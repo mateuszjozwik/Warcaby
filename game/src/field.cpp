@@ -5,7 +5,9 @@
 #include <iostream>
 #include "field.h"
 
-Field::Field() {};
+Field::Field() {
+    hasPawn_ = false;
+};
 
 Field::Field(int xPos, int yPos, bool isGameField, bool hasPawn) :
         xPos_(xPos),

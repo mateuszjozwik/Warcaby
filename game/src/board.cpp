@@ -5,9 +5,11 @@
 const unsigned Board::WIDTH;
 const unsigned Board::HEIGHT;
 
-Board::Board() {
-    std::cout << "create Board" << std::endl;
+static const unsigned WIDTH = 8;
+static const unsigned HEIGHT = 8;
+typedef Array2D<Field, WIDTH, HEIGHT> BoardMatrix;
 
+Board::Board() {
     bool isGameField;
     for (unsigned int x = 0; x < WIDTH; ++x) {
         isGameField = (x%2!=0);
@@ -21,6 +23,10 @@ Board::Board() {
     }
 }
 
+BoardMatrix& Board::getBoardMatrix() {
+    return boardMatrix_;
+}
+
 void Board::resetBoard(Player &player_) {
     for (unsigned int x = 0; x < WIDTH; ++x) {
         for (unsigned int y = 0; y < HEIGHT; ++y) {
@@ -29,7 +35,7 @@ void Board::resetBoard(Player &player_) {
         }
     }
 
-    std::array<Pawn, 4>* pawns = player_.getPlayerPawns();
+    std::array<Pawn, 12>* pawns = player_.getPlayerPawns();
 
     for (Pawn& pawn: pawns->_M_elems) {
         pawn.setX(-1);
@@ -82,13 +88,12 @@ void Board::setPawns(Player &player_, Player &enemy_) {
     for (unsigned int x = 0; x < WIDTH; ++x) {
         for (unsigned int y = 0; y < HEIGHT; ++y) {
             if (y<3 && ((x%2 != 0 && y%2==0) || (x%2 == 0 && y%2!=0))) {
-                std::array<Pawn, 4>* pawns = player_.getPlayerPawns();
+                std::array<Pawn, 12>* pawns = player_.getPlayerPawns();
                 for (Pawn& pawn: pawns->_M_elems) {
                     if (pawn.getY() < 0) {
                         pawn.setX(x);
                         pawn.setY(y);
                         pawn.initY(y);
-                        pawn.setQueen(true);
                         boardMatrix_[x][y].setPawn(&pawn);
                         boardMatrix_[x][y].setHasPawn(true);
 
@@ -98,7 +103,7 @@ void Board::setPawns(Player &player_, Player &enemy_) {
             }
 
             if ((y>4) && ((x%2==0 && y%2!=0) || (x%2!=0 && y%2==0))) {
-                std::array<Pawn, 4>* pawns = enemy_.getPlayerPawns();
+                std::array<Pawn, 12>* pawns = enemy_.getPlayerPawns();
                 for (Pawn& pawn: pawns->_M_elems) {
                     if (pawn.getY() < 0) {
                         pawn.setX(x);
@@ -113,5 +118,25 @@ void Board::setPawns(Player &player_, Player &enemy_) {
                 }
             }
         }
+    }
+}
+
+void Board::addPawn(Player &player_, int x, int y, Color color) {
+    if (boardMatrix_[x][y].isGameField() == true) {
+        std::array<Pawn, 12> *pawns = player_.getPlayerPawns();
+        for (Pawn &pawn: pawns->_M_elems) {
+            if (pawn.getY() < 0) {
+                pawn.setX(x);
+                pawn.setY(y);
+                pawn.initY(y);
+                pawn.setColor(color);
+                boardMatrix_[x][y].setPawn(&pawn);
+                boardMatrix_[x][y].setHasPawn(true);
+
+                break;
+            }
+        }
+    } else {
+        throw std::invalid_argument("Can not add pawn on this field");
     }
 }

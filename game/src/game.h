@@ -12,18 +12,24 @@ using namespace std;
 #ifndef GAME_H
 #define GAME_H
 
-#ifdef GAME_EXPORTS
-//Workaround for Windows DLL library exports
-#define FASADA_DLL(X) __declspec(dllexport)X
+#if defined(_MSC_VER) && (_MSC_VER >= 1400)
+//msvc disable warnings for sheduler_ and history_ member
+#pragma warning(disable:4251)
+#endif
+
+
+#ifdef GAME_STATE_EXPORTS
+/** Workaround for Windows DLL library exports */
+#define GAME_STATE_DLL(X) __declspec(dllexport)X
 #else
-//Workaround for Unix Shared Library exports
-#define GAME_DLL(X) X
+/** Workaround for Unix Shared Library exports */
+#define GAME_STATE_DLL(X) X
 #endif
 
 typedef shared_ptr<Field> PField;
 typedef shared_ptr<Pawn> PPawn;
 
-class GAME_DLL(Game) {
+class GAME_STATE_DLL( Game ) {
 public:
     static Game& getInstance();
     void const initGame();

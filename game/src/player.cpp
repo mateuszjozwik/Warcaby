@@ -7,14 +7,12 @@
 using namespace std;
 
 Player::Player(int num) : num_(num) {
-    std::cout << "PLAYER" << std::endl;
 }
 
 Player::~Player() {
-    std::cout << "DESTROY_PLAYER" << std::endl;
 }
 
-std::array<Pawn, 4>* Player::getPlayerPawns() {
+std::array<Pawn, 12>* Player::getPlayerPawns() {
     return &playerPawns_;
 }
 

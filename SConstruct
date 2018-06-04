@@ -6,13 +6,6 @@ MYAPP_VER_MINOR = '09'
 MYAPP_VER_COMPILATION = '0'
 MYAPP_VER_INSTALL = '1'
 
-#odczytuje wersje kompilacji z wersji repozytorium
-ver_repository = subprocess.Popen('hg sum', shell=True, stdout=subprocess.PIPE).communicate()[0]
-try:
-    MYAPP_VER_COMPILATION = re.search('(?<=parent: )\d+', ver_repository).group()
-except BaseException:
-    pass
-
 MYAPP_VER_STRING = str(MYAPP_VER_MAJOR) + '.' + str(MYAPP_VER_MINOR) + '.' + MYAPP_VER_COMPILATION
 
 #web
@@ -106,10 +99,10 @@ elif env['cov'] == 1:
         print("\n")
 elif env['t'] == 'c':
     if(platform.system() == "Linux"):
-        addToLD('./calc')
-        os.system('calc/calc_test')
+        addToLD('./game')
+        os.system('game/game_logic_test')
     elif(platform.system() == "Windows"):
-        os.system('calc\calc_test.exe')
+        os.system('game\game_logic_test.exe')
 elif env['t'] == 'f':
     if platform.system() == "Linux":
         os.system('lighttpd -f client/lighttpd.develop')

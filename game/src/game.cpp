@@ -404,12 +404,10 @@ bool Game::canPlayerKill(Color color) const {
     switch (color) {
         case Color::WHITE: {
             bool canKill = player_.canPlayerKill();
-            cout << "CAN KILL: " << canKill << endl;
             return canKill;
         }
         case Color::BLACK: {
             bool canKill = enemy_.canPlayerKill();
-            cout << "CAN KILL: " << canKill << endl;
             return canKill;
         }
     }

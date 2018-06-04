@@ -6,7 +6,6 @@
 #include "field.h"
 #include "color.h"
 #include "pawn.h"
-#include "position.h"
 #include "player.h"
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1400)
@@ -31,14 +30,18 @@ public:
 
     static const unsigned WIDTH = 8;
     static const unsigned HEIGHT = 8;
+    typedef Array2D<Field, WIDTH, HEIGHT> BoardMatrix;
+
     const Field& getField(int x, int y) const;
     void setPawns(Player& player, Player& enemy);
     void movePawn(int newX, int newY, int oldX, int oldY);
     void removePawn(int x, int y);
     void resetBoard(Player &player_);
+    void addPawn(Player &player_, int x, int y, Color color);
+
+    BoardMatrix& getBoardMatrix();
 
 private:
-    typedef Array2D<Field, WIDTH, HEIGHT> BoardMatrix;
     /// array of fields storing pieces
     BoardMatrix boardMatrix_;
 };
