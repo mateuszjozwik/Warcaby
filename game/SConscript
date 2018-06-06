@@ -1,8 +1,5 @@
 # -*- mode: Python; -*-
 
-## @file calc/SConscript
-#  @brief scons build for calc C++ library
-
 import os, platform, shutil
 
 Import('env')

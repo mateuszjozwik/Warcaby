@@ -31,8 +31,9 @@ class GAME_STATE_DLL( Pawn ) {
     int posy_;
     int initPosx_;
     int initPosy_;
+    bool justKilled_;
 public:
-    Pawn(Color color_ = Color::WHITE, bool isAlive_ = true, bool isQueen_ = false, int posx = -1, int posy = -1);
+    Pawn(Color color_ = Color::WHITE, bool isAlive_ = true, bool isQueen_ = false, int posx = -1, int posy = -1, bool justKilled_ = false);
     ~Pawn();
     Color getColor() const;
     void setColor(Color color);
@@ -50,9 +51,11 @@ public:
     void setX(int x);
     void setY(int y);
 
+    bool justKilled();
+    void setJustKilled(bool justKilled);
+
     int getInitY();
     void initY(int y);
-
 };
 
 

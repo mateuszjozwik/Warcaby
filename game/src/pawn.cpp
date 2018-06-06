@@ -6,12 +6,13 @@
 #include "pawn.h"
 #include "game.h"
 
-Pawn::Pawn(Color color, bool isAlive, bool isQueen, int x, int y)
+Pawn::Pawn(Color color, bool isAlive, bool isQueen, int x, int y, bool justKilled)
         : color_(color),
           isAlive_(isAlive),
           isQueen_(isQueen),
           posx_(x),
-          posy_(y){
+          posy_(y),
+          justKilled_(justKilled){
 }
 
 Pawn::~Pawn() {
@@ -63,6 +64,14 @@ void Pawn::initY(int y) {
 
 int Pawn::getInitY() {
     return initPosy_;
+}
+
+bool Pawn::justKilled() {
+    return justKilled_;
+}
+
+void Pawn::setJustKilled(bool justKilled) {
+    justKilled_ = justKilled;
 }
 
 void Pawn::setQueen(bool isQueen) {

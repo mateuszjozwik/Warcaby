@@ -21,7 +21,7 @@ sudo pip install -r pip_dev.requirements
 
 sudo npm install -g bower
 
-5) download and unzip www.boost.org, then 'bootstrap.sh', then './b2'
+5) download and unzip www.boost.org, then 'bootstrap.sh', then './b2' (version 1.65)
 ./bootstrap.sh --with-python=/usr/bin/python3.5
 
 6) copy the subdirectory 'boost' to '/usr/local/include', copy all the files from the 'stage/lib' to '/usr/local/lib' and put the line
@@ -30,11 +30,7 @@ sudo npm install -g bower
 export LD_LIBRARY_PATH="/usr/local/lib"
  export PYTHONPATH=/usr/local/lib/python3.5/dist-packages
 
-
-7) install 'mt4cpp' library http://mt4cpp.sourcefore.net,  version at least 0.03:
- 'sudo dpkg -i mt4cpp_0.3.71-1_amd64.deb' (for 64 bit) or 'sudo dpkg -i mt4cpp_0.3.71-1_i386.deb' or unzip mt4cpp source into '/usr/local/include'
-
-8) install javascript packages
+7) install javascript packages
 
 cd client
 bower install

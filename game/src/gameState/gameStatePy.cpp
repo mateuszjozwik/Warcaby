@@ -1,8 +1,3 @@
-/**
- * \file calcpy.cpp
- * \brief the Python interface for C++ calculation library
- */
-
 #if defined(_MSC_VER) && (_MSC_VER >= 1400)
 //msvc disable warnings for Boost.Python
 #pragma warning(disable:4100)

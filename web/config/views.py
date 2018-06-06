@@ -14,8 +14,6 @@ import version
 import version.views
 import current
 import current.views
-import calcpy
-import calcpy.views
 import game
 import game.views
 

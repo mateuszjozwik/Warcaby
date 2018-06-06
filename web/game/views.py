@@ -61,14 +61,6 @@ class State:
         selected_pawn_color = pawn.getColor()
         can_kill = self._game.canPlayerKill(last_move_color)
         last_move_killed = self._game.lastMoveKilled()
-        # will_kill = False
-        # if (last_move_color is selected_pawn_color and can_kill and will_kill) or \
-        #         (last_move_color is selected_pawn_color and not can_kill):
-
-        logging.warning(last_move_color)
-        logging.warning(selected_pawn_color)
-        logging.warning(last_move_killed)
-        logging.warning(can_kill)
 
         if (last_move_color is selected_pawn_color and last_move_killed and can_kill) \
                 or (last_move_color is not selected_pawn_color):
