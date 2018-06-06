@@ -70,14 +70,6 @@ public:
         return Game::getInstance().setLastMoveColor(color);
     }
 
-    bool lastMoveKilled() {
-        return Game::getInstance().lastMoveKilled();
-    }
-
-    void setLastMoveKilled(bool lastMoveKilled) {
-        return Game::getInstance().setLastMoveKilled(lastMoveKilled);
-    }
-
     void initGame() {
         return Game::getInstance().initGame();
     }
@@ -94,7 +86,8 @@ BOOST_PYTHON_MODULE( game )
 
             class_<Board>("Board")
                 .def("getField", &Board::getField, return_value_policy<reference_existing_object>())
-            ;
+                .def("updateKills", &Board::updateKills)
+        ;
 
             class_<Pawn>("Pawn")
                 .def("getX", &Pawn::getX)
@@ -103,6 +96,8 @@ BOOST_PYTHON_MODULE( game )
                 .def("isQueen", &Pawn::isQueen)
                 .def("getColor", &Pawn::getColor)
                 .def("checkIfPawnCanKill", &Pawn::checkIfPawnCanKill)
+                .def("setJustKilled", &Pawn::setJustKilled)
+                .def("justKilled", &Pawn::justKilled)
         ;
 
             class_<Field>("Field")
@@ -126,8 +121,6 @@ BOOST_PYTHON_MODULE( game )
                 .def("canPlayerKill", &GameManagerPy::canPlayerKill)
                 .def("getLastMoveColor", &GameManagerPy::getLastMoveColor)
                 .def("setLastMoveColor", &GameManagerPy::setLastMoveColor)
-                .def("setLastMoveKilled", &GameManagerPy::setLastMoveKilled)
-                .def("lastMoveKilled", &GameManagerPy::lastMoveKilled)
 
         ;
         }

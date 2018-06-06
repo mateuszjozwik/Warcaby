@@ -13,19 +13,10 @@ Game& Game::getInstance() {
 void const Game::initGame() {
     board_.setPawns(player_, enemy_);
     setLastMoveColor(Color::BLACK);
-    setLastMoveKilled(false);
 }
 
 Color Game::getLastMoveColor() {
     return lastMoveColor_;
-}
-
-bool Game::lastMoveKilled() {
-    return lastMoveKilled_;
-}
-
-void Game::setLastMoveKilled(bool lastMoveKilled) {
-    lastMoveKilled_ = lastMoveKilled;
 }
 
 void Game::setLastMoveColor(Color color) {
@@ -35,9 +26,9 @@ void Game::setLastMoveColor(Color color) {
 void Game::restartGame() {
     board_.resetBoard(player_);
     board_.resetBoard(enemy_);
+    board_.updateKills();
     board_.setPawns(player_, enemy_);
     setLastMoveColor(Color::BLACK);
-    setLastMoveKilled(false);
 }
 
 bool Game::canMove(int x, int y) {

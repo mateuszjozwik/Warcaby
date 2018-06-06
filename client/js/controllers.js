@@ -113,7 +113,6 @@ angular.module('myAppControllers', [])
                     $scope.board[x][y] = cell;
                 }
             }
-            console.log($scope.board);
         };
 
         $scope.isChosen = function(field) {
@@ -153,7 +152,6 @@ angular.module('myAppControllers', [])
                             status = 200;
                             if (data.data.canMove) {
                                 $scope.hasToKill = $scope.board[field.y][field.x].pawn.canPawnKill;
-                                console.log("hasToKill: " + $scope.hasToKill);
                                 $scope.unChooseFields();
                                 $scope.isPawnChosen = true;
                                 $scope.chosenField = field;
@@ -171,7 +169,6 @@ angular.module('myAppControllers', [])
             gameCommands.canMove(field,
                 function (data) {
                     if (data.status === 200) {
-                        console.log(data.data);
                         return data.data.canMove;
                     }
                 }

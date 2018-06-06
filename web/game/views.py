@@ -43,11 +43,11 @@ class State:
             self._game.setLastMoveColor(player_color)
             self._game.movePawn(destination_x, destination_y, pawn_x, pawn_y)
 
-        self._game.setLastMoveKilled(False)
+        board.updateKills()
         # remove pawn from the board if performing selected move results in killing enemy's pawn
         if will_kill_pawn:
             self._game.removePawn(destination_x, destination_y, pawn_x, pawn_y)
-            self._game.setLastMoveKilled(True)
+            board.getField(destination_x, destination_y).getPawn().setJustKilled(True)
 
         return is_valid
 
@@ -60,9 +60,8 @@ class State:
         last_move_color = self._game.getLastMoveColor()
         selected_pawn_color = pawn.getColor()
         can_kill = self._game.canPlayerKill(last_move_color)
-        last_move_killed = self._game.lastMoveKilled()
 
-        if (last_move_color is selected_pawn_color and last_move_killed and can_kill) \
+        if (last_move_color is selected_pawn_color and pawn.justKilled() and can_kill) \
                 or (last_move_color is not selected_pawn_color):
 
             # checks if selected Pawn can move in any direction

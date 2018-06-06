@@ -86,10 +86,6 @@ public:
     /// @returns true if any pawn of chosen color can perform kill
     bool canPlayerKill(Color color) const;
 
-    /// @returns true if last performed move resulted in a kill
-    bool lastMoveKilled();
-    void setLastMoveKilled(bool lastMoveKilled);
-
     /// @returns color of player which performed last move
     Color getLastMoveColor();
     void setLastMoveColor(Color color);
@@ -99,7 +95,6 @@ private:
     Player player_;
     Player enemy_;
     Color lastMoveColor_;
-    bool lastMoveKilled_;
 };
 
 

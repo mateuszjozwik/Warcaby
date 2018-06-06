@@ -150,3 +150,13 @@ void Board::clearBoard() {
         }
     }
 }
+
+void Board::updateKills() {
+    for (unsigned int x = 0; x < WIDTH; ++x) {
+        for (unsigned int y = 0; y < HEIGHT; ++y) {
+            if (boardMatrix_[x][y].hasPawn()) {
+                boardMatrix_[x][y].getPawn().setJustKilled(false);
+            }
+        }
+    }
+}
